@@ -11,7 +11,7 @@ username = "pi"
 password = "pi"
 
 Command = "python ~/Desktop/LedAPI.py"
-
+cat = "cat"                                                                                                                   
 local_file = "LedAPI.py"
 target_dest = "/home/pi/Desktop/LedAPI.py"
 
@@ -59,7 +59,7 @@ for ip in pi_chassis_ip:
 for ip in pi_disponibles :
     ssh_and_run(ip,username,password,local_file,target_dest,Command)
 
-        
+
 
 
 

@@ -18,7 +18,7 @@ import snap7
 import struct
 
 plc = snap7.client.Client()
-plc.connect('192.168.0.2', 0, 1)  # IP address, rack, slot (from HW settings)
+plc.connect('192.168.0.1', 0, 1)  # IP address, rack, slot (from HW settings)
 
 db_number = 2
 start_offset = 0
