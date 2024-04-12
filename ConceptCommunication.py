@@ -10,10 +10,9 @@ pi_disponibles = []
 username = "pi"
 password = "pi"
 
-Command = "python ~/Desktop/LedAPI.py"
-cat = "cat"                                                                                                                   
+Command = "python ~/Desktop/BillesMasterAPI.py"                                                                                                                  
 local_file = "LedAPI.py"
-target_dest = "/home/pi/Desktop/LedAPI.py"
+target_dest = "/home/pi/Desktop/BillesMasterAPI.py"
 
 def check_pass(ip,username,password):
     global pi_disponibles
@@ -41,7 +40,8 @@ def ssh_and_run(ip,username,password,local_file, target_dest,command):
             print("Fichiers Transférés avec succès ! ")
         except Exception as e:
             print(f"Le transfert a rencontré un problème : {e}")
-
+        stdin, stdout, stderr = client.exec_command("pip install flask")
+        
         stdin, stdout, stderr = client.exec_command(command)
         output = stdout.read().decode(errors='ignore')  
         error = stderr.read().decode(errors='ignore')
