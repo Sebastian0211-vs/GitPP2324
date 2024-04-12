@@ -10,6 +10,7 @@ pi_disponibles = []
 username = "pi"
 password = "pi"
 
+cat ="lots of cats"
 Command = "python ~/Desktop/LedAPI.py"
 
 local_file = "LedAPI.py"
