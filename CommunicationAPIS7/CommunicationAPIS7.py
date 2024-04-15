@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import snap7
 
 plc = snap7.client.Client()

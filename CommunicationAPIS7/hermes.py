@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 import snap7
 
 WORD_LENGTH = 2  # Bytes / Word, Int
