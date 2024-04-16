@@ -39,6 +39,7 @@ def readBool(plc, db_number, start_address, bit_offset):
 	a = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
 	print('DB Number: ' + str(db_number) + ' Bit: ' + str(start_address) + '.' + str(bit_offset) + ' Value: ' + str(a))
 
+# TODO Try using this type of methods : total_prod = snap7.util.get_int(DB_bytearray,0)
 def readDB(plc, db_number, start_address, length):
 	reading = plc.read_area(snap7.types.Areas.DB, db_number, start_address, length)
 	reading = int.from_bytes(reading, byteorder='big', signed=False)
