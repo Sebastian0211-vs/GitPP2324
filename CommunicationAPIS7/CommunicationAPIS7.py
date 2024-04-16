@@ -22,14 +22,12 @@ db_number = 3
 start_offset = 0
 bit_offset = 0
 value = 1  # 1 = true | 0 = false
-
-start_address = 100  # starting address
-length_word = 2
-length_double_word = 4
 """
+
+WORD_LENGTH = 2  # Bytes / Word, Int
+DOUBLE_WORD_LENGTH = 4  # Bytes / DWord, Real, IEC Time
 BYTE_START_OFFSET = 0
 NO_DB = 0
-
 
 def writeBool(plc, db_number, start_address, bit_offset, value):
 	reading = plc.db_read(db_number, start_address, 1)    # (db number, start offset, read 1 byte)
