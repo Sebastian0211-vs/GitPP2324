@@ -6,6 +6,23 @@ import CommunicationAPIS7 as commS7
 # Initialisation de l'application Flask
 app = Flask(__name__)
 
+"""Adresses IP des APIs:"""
+plcs_ip_addresses = {
+    "Cellule1": {"ip": '172.16.x.x'},
+    "Cellule2": {"ip": '172.16.x.x'},
+    "Cellule3": {"ip": '172.16.x.x'},
+    "Cellule4": {"ip": '172.16.x.x'},
+    "Cellule5": {"ip": '172.16.x.x'},
+    "Cellule6": {"ip": '172.16.x.x'},
+    "Cellule7": {"ip": '172.16.x.x'},
+    "Cellule8": {"ip": '172.16.x.x'},
+    "Cellule9": {"ip": '172.16.x.x'},
+    "Cellule10": {"ip": '172.16.x.x'},
+    "Cellule11": {"ip": '172.16.x.x'},
+    "Cellule12": {"ip": '172.16.x.x'},
+    "Cellule13": {"ip": '172.16.x.x'},
+}
+
 """
 DATABASES dans les APIs:
 1 - ...
@@ -13,23 +30,43 @@ DATABASES dans les APIs:
 3 - ...
 """
 
-plc_ip_addresses = ['172.16.40.95']
+# This is a test
+test_connected_plcs_ip_addresses = []
+test_plcs = []
+
+for ip_address in range(len(plcs_ip_addresses)):
+    test_connected_plcs_ip_addresses.append(plcs_ip_addresses[ip_address]["ip"])
+    test_plcs.append(snap7.client.Client())
+
+for plc in test_plcs:
+    id = test_plcs.index(plc)
+    if (not plc.get_connected()):
+        plc.destroy()
+        print(f"No connection with PLC - {test_plcs[id]}")
+        test_connected_plcs_ip_addresses.pop(id)
+        test_plcs.pop(id)
+    else:
+        plc.connect(test_connected_plcs_ip_addresses[id], 0, 1)  # IP address, rack, slot
+        print(f"Connection with PLC - {test_connected_plcs_ip_addresses[id]} - OK")
+# End of test
+
+connected_plcs_ip_addresses = ['172.16.40.95']
 plcs = []
 
 # Ensemble des modes possibles
 possibles_modes = {"Mono", "Multi"}
 
-for ip_address in range(len(plc_ip_addresses)):
+for ip_address in range(len(connected_plcs_ip_addresses)):
 	plcs.append(snap7.client.Client())
-	plcs[ip_address].connect(plc_ip_addresses[ip_address], 0, 1)  # IP address, rack, slot
+	plcs[ip_address].connect(connected_plcs_ip_addresses[ip_address], 0, 1)  # IP address, rack, slot
 
-# Does not work
+# Does not work - TODO Try to use before client.connect()
 for plc in plcs:
 	id = plcs.index(plc)
 	if (not plc.get_connected()):
-		print(f"Connection lost with PLC - {plc_ip_addresses[id]}")
+		print(f"Connection lost with PLC - {connected_plcs_ip_addresses[id]}")
 	else:
-		print(f"Connection with PLC - {plc_ip_addresses[id]} - OK")
+		print(f"Connection with PLC - {connected_plcs_ip_addresses[id]} - OK")
 
 @app.route('/api/<string:mode>', methods=['GET'])
 def setMode(mode):
