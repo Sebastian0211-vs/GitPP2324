@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 import snap7
 from flask import Flask, jsonify
-#import CommunicationAPIS7 as commS7
+import CommunicationAPIS7 as commS7
 
 # Initialisation de l'application Flask
 app = Flask(__name__)
@@ -18,27 +18,30 @@ DATABASES dans les APIs:
 3 - ...
 """
 
-plc_ip_addresses = []
+plc_ip_addresses = ['172.16.40.95']
 plcs = []
 
 # Ensemble des modes possibles
 possibles_modes = {"Mono", "Multi"}
 
-""" To test without a plc
 for ip_address in range(len(plc_ip_addresses)):
-    plcs[ip_address] = snap7.client.Client()
-    plcs[ip_address].connect(plc_ip_addresses[ip_address], 0, 1)  # IP address, rack, slot
+	plcs.append(snap7.client.Client())
+	plcs[ip_address].connect(plc_ip_addresses[ip_address], 0, 1)  # IP address, rack, slot
 
+# Does not work
 for plc in plcs:
-    if (not plc.get_connected()):
-        print(f"Connection lost with PLC - {plc}")
-"""
+	id = plcs.index(plc)
+	if (not plc.get_connected()):
+		print(f"Connection lost with PLC - {plc_ip_addresses[id]}")
+	else:
+		print(f"Connection with PLC - {plc_ip_addresses[id]} - OK")
 
 @app.route('/api/<string:mode>', methods=['GET'])
 def setMode(mode):
     """Changer le mode de fonctionnement des chassis."""
     try:
         if mode in possibles_modes:
+            commS7.writeBool(plcs[0], 3, 0, 1, 1)
             print("Le mode a été changé")
             return jsonify(message=f"Chassis en mode {mode}"), 200
         else:
