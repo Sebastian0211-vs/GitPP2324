@@ -1,24 +1,8 @@
-"""
-Functions writeBool and readBool are based on:
-	https://github.com/gijzelaerr/python-snap7/blob/master/example/boolean.py
-	the minimum amount of data being read or written to a plc is 1 byte
-
-Functions readMemory and writeMemory are based on:
-	https://buildmedia.readthedocs.org/media/pdf/python-snap7/latest/python-snap7.pdf
-	Python snap7 documentation
-
-General Constraints:
-	get/put get has to be enabled
-	virtual adapter from plc sim advanced has to be used
-	DB cannot be optimized
-
-"""
-
+#-*- coding: utf-8 -*-
 import snap7
-import struct
 
 plc = snap7.client.Client()
-plc.connect('192.168.0.1', 0, 1)  # IP address, rack, slot (from HW settings)
+plc.connect('172.16.40.95', 0, 1)  # IP address, rack, slot
 
 db_number = 3
 start_offset = 0
@@ -28,45 +12,101 @@ value = 1  # 1 = true | 0 = false
 start_address = 100  # starting address
 length_word = 2
 length_double_word = 4
+BYTE_START_OFFSET = 0
+NO_DB = 0
 
-def writeBool(db_number, start_offset, bit_offset, value):
-	reading = plc.db_read(db_number, start_offset, 1)    # (db number, start offset, read 1 byte)
-	snap7.util.set_bool(reading, 0, bit_offset, value)   # (value 1= true;0=false) (bytearray_: bytearray, byte_index: int, bool_index: int, value: bool)
-	plc.db_write(db_number, start_offset, reading)       #  write back the bytearray and now the boolean value is changed in the PLC.
-	return None
+def writeBool(db_number, start_address, bit_offset, value):
+	reading = plc.db_read(db_number, start_address, 1)    # (db number, start offset, read 1 byte)
+	snap7.util.set_bool(reading, BYTE_START_OFFSET, bit_offset, value)   # (value 1= true;0=false) (bytearray_: bytearray, byte_index: int, bool_index: int, value: bool)
+	plc.db_write(db_number, start_address, reading)       #  write back the bytearray and now the boolean value is changed in the PLC.
 
-def readBool(db_number, start_offset, bit_offset):
-	reading = plc.db_read(db_number, start_offset, 1)
-	a = snap7.util.get_bool(reading, 0, bit_offset)
-	print('DB Number: ' + str(db_number) + ' Bit: ' + str(start_offset) + '.' + str(bit_offset) + ' Value: ' + str(a))
-	return None
+def readBool(db_number, start_address, bit_offset):
+	reading = plc.db_read(db_number, start_address, 1)
+	a = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
+	print('DB Number: ' + str(db_number) + ' Bit: ' + str(start_address) + '.' + str(bit_offset) + ' Value: ' + str(a))
 
-# Not useful at the moment
-def readMemory(start_address,length):
-	reading = plc.read_area(snap7.types.Areas.MK, 0, start_address, length)
-	value = struct.unpack('>f', reading)  # big-endian
-	print('Start Address: ' + str(start_address) + ' Value: ' + str(value))
-
-# Not useful at the moment
-def writeMemory(start_address,length,value):
-	plc.mb_write(start_address, length, bytearray(struct.pack('>f', value)))  # big-endian
-	print('Start Address: ' + str(start_address) + ' Value: ' + str(value))
-
-#TODO Test
-def readDB(db_number, start_offset, length):
-	reading = plc.read_area(snap7.types.Areas.DB, db_number, start_offset, length)
+def readDB(db_number, start_address, length):
+	reading = plc.read_area(snap7.types.Areas.DB, db_number, start_address, length)
 	reading = int.from_bytes(reading, byteorder='big', signed=False)
+	print(reading)
 
-#TODO Test
-def writeDB(db_number, start_offset, length, value):
+def writeDB(db_number, start_address, length, value):
 	value = value.to_bytes(length, byteorder='big')
-	reading = plc.write_area(snap7.types.Areas.DB, db_number, start_offset, length, value)
+	print(value)
+	plc.write_area(snap7.types.Areas.DB, db_number, start_address, value)
 
-# writeBool(db_number, start_offset, bit_offset, value)
+def readInput(start_address, bit_offset, length):
+	reading = plc.read_area(snap7.types.Areas.PE, NO_DB, start_address, length)
+	value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
+	print(value)
+
+def readOutput(start_address, bit_offset, length):
+	reading = plc.read_area(snap7.types.Areas.PA, NO_DB, start_address, length)
+	value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
+	print(value)
+
+# Really better not to use
+def writeInput(start_address, bit_offset, length, value):
+	reading = plc.read_area(snap7.types.Areas.PE, NO_DB, start_address, length)   
+	snap7.util.set_bool(reading, BYTE_START_OFFSET, bit_offset, value)   
+	plc.write_area(snap7.types.Areas.PE, NO_DB, start_address, reading)          
+
+# TODO Finish (real?)
+def readMemory(start_address, bit_offset, length, type):
+	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
+	if (type == "bool"):
+		value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
+		print(value)
+	elif (type == "byte"): # Useful ???
+		value = reading
+		print(value)
+	elif (type == "int"):
+		value = int.from_bytes(reading, byteorder='big', signed=True)
+		print(value)
+	elif (type == "time"):
+		value = int.from_bytes(reading, byteorder='big', signed=False)
+		ms = value
+		s = ms // 1000
+		ms %= 1000
+		min = s // 60
+		s %= 60
+		h = min // 60
+		min %= 60
+		print(f"{h}h {min}min {s}s {ms}ms")
+	else:
+		print("Invalid type")
+
+	print('Start Address: ' + str(start_address) + ' Value: ' + str(value))
+
+# TODO Finish
+def writeMemory(start_address, bit_offset, length, type, value):
+	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
+	if (type == "bool"):
+		snap7.util.set_bool(reading, BYTE_START_OFFSET, bit_offset, value)   
+		plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, reading)
+	elif (type == "byte"): # Useful ???
+		plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)
+	elif (type == "int"):
+		value = value.to_bytes(length, byteorder='big')
+		print(value)
+		plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)
+	elif (type == "time"):
+		# TODO when format decided
+		print("TODO")
+	else:
+		print("Invalid type")
+
+
+# writeMemory(202, 0, 2, "int", 5)
+# readMemory(202, 0, 2, "int")
+
+# readInput(0, 0, 1)
+# readOutput()
+
+#while True:
+#	writeInput(0, 0, 1, 1)
+
+# writeBool(3, 0, 1, 0)
 # readBool(db_number, start_offset, bit_offset)
-readDB(3, 2, length_word)
-writeDB(3, 2, length_word, 5)
-
-# Not useful at the moment
-# writeMemory(start_address, length, value)
-# readMemory(start_address, length)
+# readDB(3, 2, length_word)
+# writeDB(3, 2, length_word, 5)
