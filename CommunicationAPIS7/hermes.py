@@ -6,11 +6,6 @@ import CommunicationAPIS7 as commS7
 # Initialisation de l'application Flask
 app = Flask(__name__)
 
-WORD_LENGTH = 2  # Bytes / Word, Int
-DOUBLE_WORD_LENGTH = 4  # Bytes / DWord, Real, IEC Time
-BYTE_START_OFFSET = 0
-NO_DB = 0
-
 """
 DATABASES dans les APIs:
 1 - ...
