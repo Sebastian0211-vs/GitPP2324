@@ -2,26 +2,28 @@
 import snap7
 from flask import Flask, jsonify
 import CommunicationAPIS7 as commS7
+#import ip_addresses
+
 
 # Initialisation de l'application Flask
 app = Flask(__name__)
 
 """Adresses IP des APIs:"""
-plcs_ip_addresses = {
-    "Cellule1": {"ip": '172.16.x.x'},
-    "Cellule2": {"ip": '172.16.x.x'},
-    "Cellule3": {"ip": '172.16.x.x'},
-    "Cellule4": {"ip": '172.16.x.x'},
-    "Cellule5": {"ip": '172.16.x.x'},
-    "Cellule6": {"ip": '172.16.x.x'},
-    "Cellule7": {"ip": '172.16.x.x'},
-    "Cellule8": {"ip": '172.16.x.x'},
-    "Cellule9": {"ip": '172.16.x.x'},
-    "Cellule10": {"ip": '172.16.x.x'},
-    "Cellule11": {"ip": '172.16.x.x'},
-    "Cellule12": {"ip": '172.16.x.x'},
-    "Cellule13": {"ip": '172.16.x.x'},
-}
+plcs_ip_addresses = [
+    ["Cellule1", '172.16.40.95'],
+    ["Cellule2", '172.16.x.x'],
+    ["Cellule3", '172.16.x.x'],
+    ["Cellule4", '172.16.x.x'],
+    ["Cellule5", '172.16.x.x'],
+    ["Cellule6", '172.16.x.x'],
+    ["Cellule7", '172.16.x.x'],
+    ["Cellule8", '172.16.x.x'],
+    ["Cellule9", '172.16.x.x'],
+    ["Cellule10", '172.16.x.x'],
+    ["Cellule11", '172.16.x.x'],
+    ["Cellule12", '172.16.x.x'],
+    ["Cellule13", '172.16.x.x']
+]
 
 """
 DATABASES dans les APIs:
@@ -30,16 +32,30 @@ DATABASES dans les APIs:
 3 - ...
 """
 
-# This is a test
-test_connected_plcs_ip_addresses = []
-test_plcs = []
+connected_plcs_ip_addresses = []
+plcs = []
 
-for ip_address in range(len(plcs_ip_addresses)):
-    test_connected_plcs_ip_addresses.append(plcs_ip_addresses[ip_address]["ip"])
-    test_plcs.append(snap7.client.Client())
+nbr_plcs = len(plcs_ip_addresses)
+ip_address = 0
+while (ip_address < nbr_plcs):
+    try:
+        print(ip_address)
+        connected_plcs_ip_addresses.append(plcs_ip_addresses[ip_address][1])
+        plcs.append(snap7.client.Client())
+        plcs[ip_address].connect(connected_plcs_ip_addresses[ip_address], 0, 1)
+    except Exception as e:
+        connected_plcs_ip_addresses.pop(ip_address)
+        plcs.pop(ip_address)
+        ip_address -= 1
+        nbr_plcs -= 1
 
+    ip_address += 1
+
+# Does not work -> Why ???
+"""
 for plc in test_plcs:
     id = test_plcs.index(plc)
+    print(plc.get_connected())
     if (not plc.get_connected()):
         plc.destroy()
         print(f"No connection with PLC - {test_plcs[id]}")
@@ -48,33 +64,28 @@ for plc in test_plcs:
     else:
         plc.connect(test_connected_plcs_ip_addresses[id], 0, 1)  # IP address, rack, slot
         print(f"Connection with PLC - {test_connected_plcs_ip_addresses[id]} - OK")
-# End of test
+"""
 
-connected_plcs_ip_addresses = ['172.16.40.95']
-plcs = []
+print()
+print(connected_plcs_ip_addresses)
+print()
+print(plcs)
 
 # Ensemble des modes possibles
-possibles_modes = {"Mono", "Multi"}
-
-for ip_address in range(len(connected_plcs_ip_addresses)):
-	plcs.append(snap7.client.Client())
-	plcs[ip_address].connect(connected_plcs_ip_addresses[ip_address], 0, 1)  # IP address, rack, slot
-
-# Does not work - TODO Try to use before client.connect()
-for plc in plcs:
-	id = plcs.index(plc)
-	if (not plc.get_connected()):
-		print(f"Connection lost with PLC - {connected_plcs_ip_addresses[id]}")
-	else:
-		print(f"Connection with PLC - {connected_plcs_ip_addresses[id]} - OK")
+possibles_modes = {"mono", "multi"}
 
 @app.route('/api/<string:mode>', methods=['GET'])
 def setMode(mode):
     """Changer le mode de fonctionnement des chassis."""
     try:
         if mode in possibles_modes:
-            commS7.writeBool(plcs[0], 3, 0, 1, 1)
-            print("Le mode a été changé")
+            match mode:
+                case "mono":
+                    print("Le mode a été changé en mono")
+                    commS7.writeBool(plcs[0], 3, 0, 1, 0)
+                case "multi":
+                    print("Le mode a été changé en multi")
+                    commS7.writeBool(plcs[0], 3, 0, 1, 1)
             return jsonify(message=f"Chassis en mode {mode}"), 200
         else:
             return jsonify(error="Mode invalide"), 404
@@ -84,7 +95,7 @@ def setMode(mode):
 # Gestionnaires d'erreur
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify(error="Non trouvé"), 404
+    return jsonify(error="Non trouve"), 404
 
 @app.errorhandler(500)
 def internal_error(error):
