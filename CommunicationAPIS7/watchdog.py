@@ -3,7 +3,7 @@ import requests
 
 while True:
     """Appel de toutes les valeurs nécessaires"""
-    response = requests.get("http://localhost:5000/api/Mono")
+    response = requests.get("http://localhost:5000/api/mono")
 
     """Watchdog"""
     nbr_billes_entree_chassis = 0
