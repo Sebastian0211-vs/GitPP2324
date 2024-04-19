@@ -24,8 +24,8 @@ PLCS_IP_ADDRESSES = [
 PLCS_IP_ADDRESSES = {
     "CelluleTest": '172.16.40.95',
     "Cellule1": '172.16.10.80',
-    "Cellule2": '172.16.20.80',
-    "Cellule3": '172.16.30.80',
+    #"Cellule2": '172.16.20.80',
+    #"Cellule3": '172.16.30.80',
     #"Cellule4": '172.16.40.80',
     #"Cellule5": '172.16.50.80',
     #"Cellule6": '172.16.60.80',
