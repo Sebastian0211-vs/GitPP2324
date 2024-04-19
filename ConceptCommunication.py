@@ -46,7 +46,7 @@ def ssh_and_run(ip,username,password,local_file, target_dest,command):
         output = stdout.read().decode(errors='ignore')  
         error = stderr.read().decode(errors='ignore')
 
-        stdin, stdout, stderr = client.exec_command(command)
+        stdin, stdout, stderr = client.exec_command(Command2)
         output = stdout.read().decode(errors='ignore')  
         error = stderr.read().decode(errors='ignore')
         print(f"Terminal de {ip}: {output}")
