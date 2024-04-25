@@ -10,12 +10,22 @@ conn = connect(
  
 print('A connection object has been created.')
 
-cursor = conn.cursor()
-cursor.execute("SELECT * FROM chassis_TB")
-records = cursor.fetchall()
-for row in records:
-    print(row)
-cursor.close()
- 
+def TBprint(table):
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM "+table)
+    records = cursor.fetchall()
+    for row in records:
+        print(row)
+    cursor.close()
+
+
+print("---CHASSIS------------------------------------------------------------")
+TBprint("chassis")
+print("---CELLULES-----------------------------------------------------------")
+TBprint("cellules")
+print("---OPTIONS------------------------------------------------------------")
+TBprint("options")
+
+
 # close the database connection
 conn.close()
