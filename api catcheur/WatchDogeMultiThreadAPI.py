@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, jsonify
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
@@ -7,6 +8,12 @@ from multiprocessing.dummy import Pool as ThreadPool
 import concurrent.futures
 
 app = Flask(__name__)
+# Set up logging
+logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+def execute_in_threadpool(func, *args):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        executor.map(func, *args)
 
 def job():
     NombreAPIConnected = 0
@@ -15,9 +22,6 @@ def job():
     nombremultisql = 0
     checkplusde3(nombremultisql)
     get_info()
-    
-    
-valid_request = ["Mx_..." , "Mx_..."]
 
 def get_info():
     global valid_request
@@ -25,9 +29,9 @@ def get_info():
     def make_request(ip, request):
         try:
             response = requests.get(f"http://{ip['RASP']}:8000/{request}")
-            print(response.json())
+            logging.info(response.json())
         except Exception as e:
-            print(e)
+            logging.error(e)
 
     pool = ThreadPool(4)  # Use 4 threads
     for request in valid_request:
@@ -43,60 +47,50 @@ def multi_possible(NombreAPIConnected):
             if checker.status_code == 200:
                 return True
         except Exception as e:
-            print(e)
+            logging.error(e)
         return False
 
     def set_multi(ip, value):
         try:
             requests.get(f"http://{ip['RASP']}:8000/multi/{value}")
         except Exception as e:
-            print(e)
+            logging.error(e)
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = list(executor.map(check_possible, ip.ip_addresses.values()))
-        NombreAPIConnected += sum(results)
+    results = execute_in_threadpool(check_possible, ip.ip_addresses.values())
+    NombreAPIConnected += sum(results)
 
     if NombreAPIConnected > 1:
-        print("Mode multi disponible")
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            executor.map(set_multi, ip.ip_addresses.values(), ['True']*len(ip.ip_addresses))
+        logging.info("Mode multi disponible")
+        execute_in_threadpool(set_multi, ip.ip_addresses.values(), ['True']*len(ip.ip_addresses))
     else:
-        print("Mode multi indisponible")
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            executor.map(set_multi, ip.ip_addresses.values(), ['False']*len(ip.ip_addresses))
+        logging.info("Mode multi indisponible")
+        execute_in_threadpool(set_multi, ip.ip_addresses.values(), ['False']*len(ip.ip_addresses))
 
 def checkplusde3(nombremultisql):
-    if nombremultisql >=3:
-        print("Multi sur plus de 3 châssis")
-        for ip in ip.ip_addresses.values():
-            try:
-                requests.get(f"http://{ip['RASP']}:8000/multinbr/True")
-            except Exception as e:
-                print(e)
-    else:
-        print("Multi sur moins de 3 châssis")
-        for ip in ip.ip_addresses.values():
-            try:
-                requests.get(f"http://{ip['RASP']}:8000/multinbr/False")
-            except Exception as e:
-                print(e)
+    def set_multinbr(ip, value):
+        try:
+            requests.get(f"http://{ip['RASP']}:8000/multinbr/{value}")
+        except Exception as e:
+            logging.error(e)
 
+    if nombremultisql >=3:
+        logging.info("Multi sur plus de 3 châssis")
+        execute_in_threadpool(set_multinbr, ip.ip_addresses.values(), ['True']*len(ip.ip_addresses))
+    else:
+        logging.info("Multi sur moins de 3 châssis")
+        execute_in_threadpool(set_multinbr, ip.ip_addresses.values(), ['False']*len(ip.ip_addresses))
 
 for ip in ip.ip_addresses.values():
     url = f"http://{ip['RASP']}:8000/API_IP/{ip['API']}"
     try:
         response = requests.get(url)
-        print(response.json())
+        logging.info(response.json())
     except Exception as e:
-        print(e)
+        logging.error(e)
 
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(job, 'interval', seconds=1)
 scheduler.start()
 
-
-# Point d'entrée principal pour exécuter l'application
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
-
-
