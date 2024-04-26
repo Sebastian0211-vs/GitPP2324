@@ -39,6 +39,15 @@ def setup_and_activate(position, colors, state):
 
 @app.route('/pin/<string:position>/<string:couleur>/high', methods=['GET'])
 def pin_HIGH(position, couleur):
+
+    try:
+        for color in ["red","yellow","green","cyan","blue","magenta","white"]:
+            pin_LOW(position, color)
+
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
     """Activer la couleur spécifiée à la position donnée."""
     try:
         if position in valid_positions:
@@ -59,6 +68,7 @@ def pin_HIGH(position, couleur):
 @app.route('/pin/<string:position>/<string:couleur>/low', methods=['GET'])
 def pin_LOW(position, couleur):
     """Éteindre la couleur spécifiée à la position donnée."""
+    
     try:
         if position in valid_positions:
             if couleur in color_combinations:
@@ -82,9 +92,18 @@ def reset_all_pins():
             GPIO.output(color_pin, GPIO.LOW)
     return jsonify({"message": "Tous les pins ont été réinitialisés à l'état LOW"}), 200
 
+
+
 @app.route('/rainbow/<string:position>', methods=['GET'])
 def rainbow(position):
     """Appliquer un effet arc-en-ciel à la position spécifiée."""
+    try:
+        for color in ["red","yellow","green","cyan","blue","magenta","white"]:
+            pin_LOW(position, color)
+
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
     try:
         if position in valid_positions:
             for couleur in ['red', 'yellow', 'green', 'cyan', 'blue', 'magenta']:
