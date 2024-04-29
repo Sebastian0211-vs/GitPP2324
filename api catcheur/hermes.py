@@ -8,6 +8,9 @@ import requests
 
 CONNECTED_PLC = ""
 
+var_api_out = ["Mw_API_CVSortieStandard","Mw_API_CVSortieSecours","Mw_API_CVEntree"]
+
+var_api_in = ["Mw_master_nb_billes_sortie_normal","Mw_master_nb_billes_sortie_secours","Mw_master_nb_billes_entree"]
 
 app = Flask(__name__)
 @app.route('/API_IP/<string:ip>', methods=['GET'])
@@ -52,6 +55,22 @@ async def demande_multi(request):
         await commS7.disconnection(client)
     except Exception as e :
         return jsonify(error=str(e)), 500
+    
+
+@app.route('/trigger/<string:request>', methods=['GET'])
+async def trigger(request):
+    try:
+        client = await commS7.connection(CONNECTED_PLC)
+        variable = await commS7.getVariable(client, commS7.NAMESPACE, request)
+
+        valeur = await commS7.readValue(variable)
+        await commS7.disconnection(client)
+        if valeur:
+            return jsonify(message=f"{valeur}"), 200
+        else :
+            return jsonify(message=f"{valeur}"), 300
+    except Exception as e:
+        return jsonify(error=str(e)), 500
 
 @app.route('/multinbr/<string:BOOL>', methods=['GET'])
 async def multinbr(BOOL):
@@ -67,32 +86,33 @@ async def multinbr(BOOL):
     except Exception as e:
         return jsonify(error=str(e)), 500
 
-@app.route('/<string:plc>/<string:mode>', methods=['GET'])
-async def setMode(plc, mode):
-    """Changer le mode de fonctionnement des chassis."""
+
+
+@app.route('/compteur_bille', methods=['GET'])
+async def compteur_bille():
+    storage = []
+    for name in var_api_out:
+        try:
+            client = await commS7.connection(CONNECTED_PLC)
+            variable = await commS7.getVariable(client, commS7.NAMESPACE, name)
+            storage.append(await commS7.readValue(variable))
+            await commS7.disconnection(client)
+        except Exception as e:
+            return jsonify(error=str(e)), 500
+    return jsonify(storage), 200
+
+
+@app.route('/compteur_bille/<int:val>', methods=['GET'])
+async def set_compteur_bille(val):
     try:
-        if mode in possibles_modes:
-            match mode:
-                case "mono":
-                    print("Le mode a été changé en mono")
-                    #client = await commS7.connection("opc.tcp://172.16.40.95:4840")
-                    client = await commS7.connection(CONNECTED_PLCS[plc])
-                    variable = await commS7.getVariable(client, commS7.NAMESPACE, "Mx_IntTest")
-                    await commS7.writeValue(variable, False)
-                    await commS7.disconnection(client)
-                case "multi":
-                    print("Le mode a été changé en multi")
-                    client = await commS7.connection(CONNECTED_PLCS[plc])
-                    variable = await commS7.getVariable(client, commS7.NAMESPACE, "Mx_IntTest")
-                    await commS7.writeValue(variable, True)
-                    await commS7.disconnection(client)
-            
-            return jsonify(message=f"Chassis en mode {mode}"), 200
-        else:
-            return jsonify(error="Mode invalide"), 404
+        client = await commS7.connection(CONNECTED_PLC)
+        for name in var_api_in:
+            variable = await commS7.getVariable(client, commS7.NAMESPACE, name)
+            await commS7.writeValue(variable, val)
+        await commS7.disconnection(client)
+        return jsonify(message=f"Valeur de compteur bille modifiée"), 200
     except Exception as e:
         return jsonify(error=str(e)), 500
-    
 
 
 @app.route('/resetConnections', methods=['GET'])
