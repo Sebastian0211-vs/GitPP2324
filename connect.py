@@ -41,4 +41,5 @@ print("---OPTIONS------------------------------------------------------------")
 TBprint("options")
 
 # close the database connection
+conn.commit()
 conn.close()
