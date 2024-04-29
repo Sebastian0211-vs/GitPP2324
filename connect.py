@@ -6,7 +6,7 @@ conn = connect(
       user = 'root',
       password = 'billes1234',
       host = 'localhost',
-      database = 'NUC_DB')
+      database = 'nuc_db')
  
 print('A connection object has been created.')
 
@@ -18,6 +18,20 @@ def TBprint(table):
         print(row)
     cursor.close()
 
+#set things in mysql --------
+cursor = conn.cursor()
+cursor.execute(
+"UPDATE options "+
+"SET multi=false, unite ='h'"
+)
+cursor.close()
+#---------------------
+#add line in mysql------------
+cursor =conn.cursor()
+cursor.execute(
+"INSERT INTO options (multi,billes,unite)"+
+"VALUES(false,31,'h')"
+)
 
 print("---CHASSIS------------------------------------------------------------")
 TBprint("chassis")
@@ -25,7 +39,6 @@ print("---CELLULES-----------------------------------------------------------")
 TBprint("cellules")
 print("---OPTIONS------------------------------------------------------------")
 TBprint("options")
-
 
 # close the database connection
 conn.close()
