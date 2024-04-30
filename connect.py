@@ -10,6 +10,7 @@ conn = connect(
  
 print('A connection object has been created.')
 
+#get tables---------------------------
 def TBprint(table):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM "+table)
@@ -17,6 +18,15 @@ def TBprint(table):
     for row in records:
         print(row)
     cursor.close()
+#------------------------------
+
+#set a variable to cell in SQL-----
+cursor = conn.cursor()
+cursor.execute("SELECT multi from options")
+multi = cursor.fetchone()[0]
+print(multi)
+cursor.close()
+#--------------------------------
 
 #set things in mysql --------
 cursor = conn.cursor()
@@ -26,12 +36,17 @@ cursor.execute(
 )
 cursor.close()
 #---------------------
-#add line in mysql------------
-cursor =conn.cursor()
-cursor.execute(
-"INSERT INTO options (multi,billes,unite)"+
-"VALUES(false,31,'h')"
-)
+
+#----add line in mysql------------
+#cursor =conn.cursor()
+#cursor.execute(
+#"INSERT INTO options (multi,billes,unite)"+
+#"VALUES(false,31,'h')"
+#)
+#cursor.close()
+#--------------------------
+
+
 
 print("---CHASSIS------------------------------------------------------------")
 TBprint("chassis")
