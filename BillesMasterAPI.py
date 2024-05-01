@@ -13,10 +13,10 @@ GPIO.setmode(GPIO.BCM)
 # Définition d'un dictionnaire pour mapper les positions aux numéros des broches
 led_matrix = {
     "Position1": {"red": 17, "green": 27, "blue": 22, "white": 10},
-    "Position2": {"red": 18, "green": 23, "blue": 24, "white": 25},
-    "Position3": {"red": 5, "green": 6, "blue": 12, "white": 13},
-    "Position4": {"red": 19, "green": 16, "blue": 26, "white": 20},
-    "Position5": {"red": 21, "green": 20, "blue": 7, "white": 8},
+    "Position2": {"red": 9, "green": 11, "blue": 5, "white": 6},
+    "Position3": {"red": 13, "green": 19, "blue": 26, "white": 18},
+    "Position4": {"red": 23, "green": 24, "blue": 25, "white": 8},
+    "Position5": {"red": 7, "green": 12, "blue": 16, "white": 20},
 }
 
 # Ensemble de positions valides
