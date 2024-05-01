@@ -20,38 +20,25 @@ def TBprint(table):
     cursor.close()
 #------------------------------
 
-#set a variable to cell in SQL-----
+#Programme de priorité---------
 cursor = conn.cursor()
-cursor.execute("SELECT multi from options")
-multi = cursor.fetchone()[0]
-print(multi)
+cursor.execute("SELECT changed from options")
+changed = cursor.fetchone()[0]
 cursor.close()
-#--------------------------------
 
-#set things in mysql --------
-cursor = conn.cursor()
-cursor.execute(
-"UPDATE options "+
-"SET multi=false, unite ='h'"
-)
-cursor.close()
-#---------------------
+if changed:
+    #---update to API
+    cursor = conn.cursor()
+    cursor.execute(
+    "UPDATE options "+
+    "SET changed = false"
+    )
+    cursor.close()
+else:
+    #---update from API
+    pass
+#------------------------
 
-#----add line in mysql------------
-#cursor =conn.cursor()
-#cursor.execute(
-#"INSERT INTO options (multi,billes,unite)"+
-#"VALUES(false,31,'h')"
-#)
-#cursor.close()
-#--------------------------
-
-
-
-print("---CHASSIS------------------------------------------------------------")
-TBprint("chassis")
-print("---CELLULES-----------------------------------------------------------")
-TBprint("cellules")
 print("---OPTIONS------------------------------------------------------------")
 TBprint("options")
 
