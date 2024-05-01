@@ -1,0 +1,408 @@
+root - ERROR - HTTPConnectionPool(host='172.16.0.20', port=8000): Max retries exceeded with url: /API_IP/172.16.1.80 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000001FB7CA91BD0>, 'Connection to 172.16.0.20 timed out. (connect timeout=None)'))
+root - ERROR - HTTPConnectionPool(host='172.16.0.21', port=8000): Max retries exceeded with url: /API_IP/172.16.2.80 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000001FB7CB2BA90>, 'Connection to 172.16.0.21 timed out. (connect timeout=None)'))
+root - ERROR - HTTPConnectionPool(host='172.16.0.22', port=8000): Max retries exceeded with url: /API_IP/172.16.3.80 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000001FB7CB12E50>, 'Connection to 172.16.0.22 timed out. (connect timeout=None)'))
+apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+apscheduler.scheduler - INFO - Added job "job" to job store "default"
+apscheduler.scheduler - INFO - Scheduler started
+werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://172.16.0.6:8000
+werkzeug - INFO - [33mPress CTRL+C to quit[0m
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:14 CEST)" (scheduled at 2024-04-29 09:06:14.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:15 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:16 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:17 CEST)" (scheduled at 2024-04-29 09:06:16.141344+02:00)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:17 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:18 CEST)" (scheduled at 2024-04-29 09:06:17.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:18 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:19 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:20 CEST)" (scheduled at 2024-04-29 09:06:19.141344+02:00)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:20 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:21 CEST)" (scheduled at 2024-04-29 09:06:20.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:21 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:22 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:23 CEST)" (scheduled at 2024-04-29 09:06:22.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:23 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:24 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:25 CEST)" (scheduled at 2024-04-29 09:06:24.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:25 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:26 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:27 CEST)" (scheduled at 2024-04-29 09:06:26.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:27 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:28 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:29 CEST)" (scheduled at 2024-04-29 09:06:28.141344+02:00)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:29 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:30 CEST)" (scheduled at 2024-04-29 09:06:29.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:30 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:31 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:32 CEST)" (scheduled at 2024-04-29 09:06:31.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:32 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:33 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:34 CEST)" (scheduled at 2024-04-29 09:06:33.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:34 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:35 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:36 CEST)" (scheduled at 2024-04-29 09:06:35.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:36 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:37 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:38 CEST)" (scheduled at 2024-04-29 09:06:37.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:38 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:39 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:40 CEST)" (scheduled at 2024-04-29 09:06:39.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:40 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:41 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:42 CEST)" (scheduled at 2024-04-29 09:06:41.141344+02:00)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:42 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:43 CEST)" (scheduled at 2024-04-29 09:06:42.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:43 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:44 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:45 CEST)" (scheduled at 2024-04-29 09:06:44.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:45 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:46 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:47 CEST)" (scheduled at 2024-04-29 09:06:46.141344+02:00)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:47 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:48 CEST)" (scheduled at 2024-04-29 09:06:47.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:48 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:49 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:50 CEST)" (scheduled at 2024-04-29 09:06:49.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:50 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:51 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:52 CEST)" (scheduled at 2024-04-29 09:06:51.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:52 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:53 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:54 CEST)" (scheduled at 2024-04-29 09:06:53.141344+02:00)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:54 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:55 CEST)" (scheduled at 2024-04-29 09:06:54.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:55 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:56 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:57 CEST)" (scheduled at 2024-04-29 09:06:56.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:57 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:58 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:59 CEST)" (scheduled at 2024-04-29 09:06:58.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:06:59 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:00 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:01 CEST)" (scheduled at 2024-04-29 09:07:00.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:01 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:02 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:03 CEST)" (scheduled at 2024-04-29 09:07:02.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:03 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:04 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:05 CEST)" (scheduled at 2024-04-29 09:07:04.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:05 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:06 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:07 CEST)" (scheduled at 2024-04-29 09:07:06.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:07 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:08 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
+apscheduler.executors.default - INFO - Running job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:09 CEST)" (scheduled at 2024-04-29 09:07:08.141344+02:00)
+apscheduler.scheduler - WARNING - Execution of job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:09 CEST)" skipped: maximum number of running instances reached (1)
+apscheduler.executors.default - ERROR - Job "job (trigger: interval[0:00:01], next run at: 2024-04-29 09:07:10 CEST)" raised an exception
+Traceback (most recent call last):
+  File "C:\Users\sebas\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\apscheduler\executors\base.py", line 125, in run_job
+    retval = job.func(*job.args, **job.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 47, in job
+    multi_possible(NombreAPIConnceted)
+  File "c:\Users\sebas\OneDrive - Ecoles - Schulen Valais-Wallis\Documents\EPTM - PP\PROJET\GIT\GitPP2324\api catcheur\WatchDogeAPI.py", line 86, in multi_possible
+    for ip in ip.ip_addresses.values():
+              ^^
+UnboundLocalError: cannot access local variable 'ip' where it is not associated with a value
