@@ -4,21 +4,20 @@ import re
 import variablesAPI
 
 """
-plc_ip_addresses = ['172.16.40.95',
-					'172.16.40.96']
+plc_ip_addresses = ['172.16.2.80']
 plcs = []
 
 for ip_address in range(len(plc_ip_addresses)):
 	plcs.append(snap7.client.Client())
 	plcs[ip_address].connect(plc_ip_addresses[ip_address], 0, 1)  # IP address, rack, slot
 
-# Does not work
-for plc in plcs:
-	id = plcs.index(plc)
-	if (not plc.get_connected()):
-		print(f"Connection lost with PLC - {plc_ip_addresses[id]}")
-	else:
-		print(f"Connection with PLC - {plc_ip_addresses[id]} - OK")
+# # Does not work
+# for plc in plcs:
+# 	id = plcs.index(plc)
+# 	if (not plc.get_connected()):
+# 		print(f"Connection lost with PLC - {plc_ip_addresses[id]}")
+# 	else:
+# 		print(f"Connection with PLC - {plc_ip_addresses[id]} - OK")
 
 db_number = 3
 start_offset = 0
@@ -71,17 +70,18 @@ def writeInput(plc, start_address, bit_offset, length, value):
 
 # TODO Finish (real?)
 def oldReadMemory(plc, start_address, bit_offset, length, type):
+	print(f"Start Address: {start_address}")
 	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
-	if (type == "bool"):
+	if (type == "Bool"):
 		value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
 		print(value)
-	elif (type == "byte"): # Useful ???
+	elif (type == "Byte"): # Useful ???
 		value = reading
 		print(value)
-	elif (type == "int"):
+	elif (type == "Int"):
 		value = int.from_bytes(reading, byteorder='big', signed=True)
 		print(value)
-	elif (type == "time"):
+	elif (type == "Time"):
 		value = int.from_bytes(reading, byteorder='big', signed=False)
 		ms = value
 		s = ms // 1000
@@ -119,16 +119,21 @@ def getLength(type):
 def extract_numbers(logical_address):
 	# Using regular expression to find numbers
 	numbers = re.findall(r'\d+', logical_address)
-	return numbers if numbers else None  # Return the first found number, or None if no number is found
+	return [int(number) for number in numbers] if numbers else None # Return the list of numbers, or None if no number is found
 
 # TODO Finish (real?)
 def readMemory(plc, variable):
 	type = variablesAPI.variables[variable]["Data Type"]
 	length = getLength(type)
+	print(f"length: {length}")
 	logical_address = variablesAPI.variables[variable]["Logical Address"]
 	address = extract_numbers(logical_address)
 	start_address = address[0] if address != None else None
+	#start_address = 340
+	print(f"start_address: {start_address}")
 	bit_offset = address[1] if len(address) == 2 else 0
+	#bit_offset = 0
+	print(f"bit_offset: {bit_offset}")
 
 	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
 	if (type == "Bool"):
@@ -198,13 +203,20 @@ def writeMemory(plc, variable, value):
 	else:
 		print("Invalid type")
 
+"""
+address = extract_numbers(variablesAPI.variables["Mw_API_CVEntree"]["Logical Address"])
+print(address)
+start_address = address[0] if address != None else None
+print(start_address)
+bit_offset = address[1] if len(address) == 2 else 0
+print(bit_offset)
+print("-----------------------------------------------")
 
-# address = extract_numbers(variablesAPI.variables["Mw_API_CVEntree"]["Logical Address"])
-# print(address)
-# start_address = address[0] if address != None else None
-# print(start_address)
-# bit_offset = address[1] if len(address) == 2 else 0
-# print(bit_offset)
+for plc in plcs:
+	#oldReadMemory(plc, 340, 0, 2, "Int")
+	print("-----------------------------------------------")
+	readMemory(plc, "Mw_API_CVEntree")
+"""
 
 # writeMemory(202, 0, 2, "int", 5)
 # readMemory(202, 0, 2, "int")
