@@ -29,7 +29,7 @@ print(options)
 for option in options:
     if option[6]:
         #---update to API
-        multi = option[1] # %M150.2
+        multi = option[1] #-> %M150.2
         billes = option[2]
         temps =option[3]
         infini = option[5]
@@ -68,6 +68,26 @@ for option in options:
         print("updated to API")
     else:
         #---update from API
+        multi = 0 # <- %M150.2
+        billes = 0 # <- %MW208 / %MW210
+        infini = 0 # <- %M105.5
+        temps = 6000 # <- %MD500 / %MD502
+        if temps > 60*60*1000:
+            temps = temps // (60*60*1000)
+            unite = "h"
+        elif temps > 60*1000:
+            temps = temps // (60*1000)  
+            unite = "m"
+        else:
+            temps = temps // 1000
+            unite ="s"
+        #---------
+        cursor = conn.cursor()
+        cursor.execute(
+        "UPDATE options "+
+        f"SET multi = {multi}, billes = {billes}, infini = {infini}, temps = {temps}, unite = '{unite}' "
+        )
+        cursor.close()
         print("updated from API")
     #------------------------
 
