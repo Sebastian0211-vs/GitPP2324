@@ -4,9 +4,9 @@ import variablesAPI
 import snap7
 
 plc = snap7.client.Client()
-print(plc)
+print(f"Client: {plc}")
 error = plc.connect('172.16.2.80', 0, 1)
-print(error)
+print(f"Connection error: {error}")
 
 for variable in variablesAPI.variables:
     try:
