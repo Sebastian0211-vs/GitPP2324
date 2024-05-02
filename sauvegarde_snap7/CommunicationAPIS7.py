@@ -1,7 +1,5 @@
 #-*- coding: utf-8 -*-
 import snap7
-import re
-import variablesAPI
 
 """
 plc_ip_addresses = ['172.16.40.95',
@@ -26,7 +24,6 @@ bit_offset = 0
 value = 1  # 1 = true | 0 = false
 """
 
-BYTE_LENGTH = 1
 WORD_LENGTH = 2  # Bytes / Word, Int
 DOUBLE_WORD_LENGTH = 4  # Bytes / DWord, Real, IEC Time
 BYTE_START_OFFSET = 0
@@ -70,7 +67,7 @@ def writeInput(plc, start_address, bit_offset, length, value):
 	plc.write_area(snap7.types.Areas.PE, NO_DB, start_address, reading)          
 
 # TODO Finish (real?)
-def oldReadMemory(plc, start_address, bit_offset, length, type):
+def readMemory(plc, start_address, bit_offset, length, type):
 	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
 	if (type == "bool"):
 		value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
@@ -96,67 +93,8 @@ def oldReadMemory(plc, start_address, bit_offset, length, type):
 
 	print('Start Address: ' + str(start_address) + ' Value: ' + str(value))
 
-def getLength(type):
-	match type:
-		case "Bool": 
-			return BYTE_LENGTH
-		
-		case "Int": 
-			return WORD_LENGTH
-		
-		case "Word": 
-			return WORD_LENGTH
-		
-		case "Byte": 
-			return DOUBLE_WORD_LENGTH
-		
-		case "Time": 
-			return DOUBLE_WORD_LENGTH
-			
-		case _: 
-			print("Invalid type")
-
-def extract_numbers(logical_address):
-	# Using regular expression to find numbers
-	numbers = re.findall(r'\d+', logical_address)
-	return numbers if numbers else None  # Return the first found number, or None if no number is found
-
-# TODO Finish (real?)
-def readMemory(plc, variable):
-	type = variablesAPI.variables[variable]["Data Type"]
-	length = getLength(type)
-	logical_address = variablesAPI.variables[variable]["Logical Address"]
-	address = extract_numbers(logical_address)
-	start_address = address[0] if address != None else None
-	bit_offset = address[1] if len(address) == 2 else 0
-
-	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
-	if (type == "Bool"):
-		value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
-		print(value)
-	elif (type == "Byte"): # Useful ???
-		value = reading
-		print(value)
-	elif (type == "Int"):
-		value = int.from_bytes(reading, byteorder='big', signed=True)
-		print(value)
-	elif (type == "Time"):
-		value = int.from_bytes(reading, byteorder='big', signed=False)
-		ms = value
-		s = ms // 1000
-		ms %= 1000
-		min = s // 60
-		s %= 60
-		h = min // 60
-		min %= 60
-		print(f"{h}h {min}min {s}s {ms}ms")
-	else:
-		print("Invalid type")
-
-	print('Start Address: ' + str(start_address) + ' Value: ' + str(value))
-
 # TODO Finish
-def oldWriteMemory(plc, start_address, bit_offset, length, type, value):
+def writeMemory(plc, start_address, bit_offset, length, type, value):
 	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
 	if (type == "bool"):
 		snap7.util.set_bool(reading, BYTE_START_OFFSET, bit_offset, value)   
@@ -173,38 +111,6 @@ def oldWriteMemory(plc, start_address, bit_offset, length, type, value):
 	else:
 		print("Invalid type")
 
-# TODO Finish
-def writeMemory(plc, variable, value):
-	type = variablesAPI.variables[variable]["Data Type"]
-	length = getLength(type)
-	logical_address = variablesAPI.variables[variable]["Logical Address"]
-	address = extract_numbers(logical_address)
-	start_address = address[0] if address != None else None
-	bit_offset = address[1] if len(address) == 2 else 0
-
-	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
-	if (type == "Bool"):
-		snap7.util.set_bool(reading, BYTE_START_OFFSET, bit_offset, value)   
-		plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, reading)
-	elif (type == "Byte"): # Useful ???
-		plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)
-	elif (type == "Int"):
-		value = value.to_bytes(length, byteorder='big')
-		print(value)
-		plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)
-	elif (type == "Time"):
-		# TODO when format decided
-		print("TODO")
-	else:
-		print("Invalid type")
-
-
-# address = extract_numbers(variablesAPI.variables["Mw_API_CVEntree"]["Logical Address"])
-# print(address)
-# start_address = address[0] if address != None else None
-# print(start_address)
-# bit_offset = address[1] if len(address) == 2 else 0
-# print(bit_offset)
 
 # writeMemory(202, 0, 2, "int", 5)
 # readMemory(202, 0, 2, "int")
