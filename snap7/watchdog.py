@@ -49,6 +49,7 @@ def job():
     checkplusde3(nombremultisql)
     get_info()
     compteur_bille()
+    deconnection()
     logging.info('Job finished')
     
 valid_request = ["Mx_master_demande_multi" , "Mx_master_alarme_urgence", "Mx_master_probleme_obstruation", "Mx_master_running", "Mx_master_arret_auto","Mx_master_quittance_obstruation","Mx_master_quittance_alarme","Mx_master_alerte_billes_perdus","Mx_master_alerte_sortie_secours"]
@@ -130,6 +131,13 @@ def checkplusde3(nombremultisql):
             except Exception as e:
                 logging.error(e)
 
+def deconnection():
+    for ip in ip.ip_addresses.values():
+        try:
+            requests.get(f"http://{ip['RASP_catch']}:8000/deconnection")
+        except Exception as e:
+            logging.error(e)
+
 ####################################################################################
 
 
@@ -139,7 +147,7 @@ def checkplusde3(nombremultisql):
 
 
 #####################################################################################
-
+"""
 for ip in ip.ip_addresses.values():
     url = f"http://{ip['RASP_catch']}:8000/API_IP/{ip['API']}"
     try:
@@ -147,6 +155,7 @@ for ip in ip.ip_addresses.values():
         print(response.json())
     except Exception as e:
         logging.error(e)
+"""
 
 scheduler = BackgroundScheduler(daemon=True)
 scheduler.add_job(job, 'interval', seconds=10)

@@ -33,19 +33,14 @@ def getLength(type):
 	match type:
 		case "Bool": 
 			return BYTE_LENGTH
-		
 		case "Int": 
 			return WORD_LENGTH
-		
 		case "Word": 
 			return WORD_LENGTH
-		
 		case "Byte": 
 			return DOUBLE_WORD_LENGTH
-		
 		case "Time": 
 			return DOUBLE_WORD_LENGTH
-			
 		case _: 
 			print("Invalid type")
 
@@ -58,13 +53,13 @@ def extract_numbers(logical_address):
 def readMemory(plc, variable):
 	type = variablesAPI.variables[variable]["Data Type"]
 	length = getLength(type)
-	print(f"length: {length}")
+	#print(f"length: {length}")
 	logical_address = variablesAPI.variables[variable]["Logical Address"]
 	address = extract_numbers(logical_address)
 	start_address = address[0] if address != None else None
-	print(f"start_address: {start_address}")
+	#print(f"start_address: {start_address}")
 	bit_offset = address[1] if len(address) == 2 else 0
-	print(f"bit_offset: {bit_offset}")
+	#print(f"bit_offset: {bit_offset}")
 
 	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
 	match type:
@@ -99,9 +94,6 @@ def readMemory(plc, variable):
 			print("Invalid type")
 			return None
 
-	print('Start Address: ' + str(start_address) + ' Value: ' + str(value))
-	print("-----------------------------------------------------")
-
 # TODO Finish
 def writeMemory(plc, variable, value):
 	type = variablesAPI.variables[variable]["Data Type"]
@@ -122,7 +114,6 @@ def writeMemory(plc, variable, value):
 
 		case "Int":
 			# value = value.to_bytes(length, byteorder='big')
-			# print(value)
 			# plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)
 			snap7.util.set_int(reading, BYTE_START_OFFSET, value)
 

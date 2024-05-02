@@ -14,6 +14,7 @@ var_api_in = ["Mw_master_nb_billes_sortie_normal","Mw_master_nb_billes_sortie_se
 
 app = Flask(__name__)
 
+"""
 @app.route('/API_IP/<string:ip>', methods=['GET'])
 def API_IP(ip):
     global CONNECTED_PLC 
@@ -24,6 +25,7 @@ def API_IP(ip):
         return jsonify(message=f"API IP: {ip}"), 200
     except Exception as e:
         return jsonify(error=str(e)), 500
+"""
 
 # Ensemble des modes possibles
 possibles_modes = {"mono", "multi"}
@@ -31,9 +33,9 @@ possibles_modes = {"mono", "multi"}
 def check_possible():
     global CONNECTED_PLC
     try:
-        # TODO Check if it works
-        if (not CONNECTED_PLC.get_connected()):
-            return jsonify(message=f"API non connecté"), 300
+        plc = snap7.client.Client()
+        plc.connect(ip, 0, 1)  # IP address, rack, slot
+        CONNECTED_PLC = plc
         return jsonify(message=f"API connecté"), 200
     except Exception as e:
         return jsonify(error=str(e)), 500
@@ -86,7 +88,6 @@ def multinbr(BOOL):
         return jsonify(message=f"Mode multi activé"), 200
     except Exception as e:
         return jsonify(error=str(e)), 500
-
 
 
 @app.route('/compteur_bille', methods=['GET'])
