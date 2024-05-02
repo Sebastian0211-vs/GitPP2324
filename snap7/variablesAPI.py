@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 variables = {
     "Mw_API_CVEntree": {"Data Type": "Int", "Logical Address": "%MW340"},
     "Mw_API_CVSortieStandard": {"Data Type": "Int", "Logical Address": "%MW440"},
