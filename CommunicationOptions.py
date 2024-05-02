@@ -85,7 +85,8 @@ for option in options:
         cursor = conn.cursor()
         cursor.execute(
         "UPDATE options "+
-        f"SET multi = {multi}, billes = {billes}, infini = {infini}, temps = {temps}, unite = '{unite}' "
+        f"SET multi = {multi}, billes = {billes}, infini = {infini}, temps = {temps}, unite = '{unite}' "+
+        f"WHERE chassis ={option[7]}"
         )
         cursor.close()
         print("updated from API")
