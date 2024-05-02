@@ -70,13 +70,16 @@ def readMemory(plc, variable):
 	match type:
 		case "Bool": 
 			value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
+			return value
 		
 		case "Int": 
 			#value = int.from_bytes(reading, byteorder='big', signed=True)
 			value = snap7.util.get_int(reading, BYTE_START_OFFSET)
+			return value
 				
 		case "Byte": 
 			value = reading
+			return value
 		
 		case "Time": 
 			# TODO Useful ???
@@ -90,9 +93,11 @@ def readMemory(plc, variable):
 			min %= 60
 			print(f"{h}h {min}min {s}s {ms}ms")
 			value = snap7.util.get_time(reading, BYTE_START_OFFSET)
+			return value
 			
 		case _: 
 			print("Invalid type")
+			return None
 
 	print('Start Address: ' + str(start_address) + ' Value: ' + str(value))
 	print("-----------------------------------------------------")
