@@ -1,48 +1,48 @@
 # GitPP2324
 
-Welcome to GitPP2324, a comprehensive Python toolkit designed to streamline and enhance communications, configuration, and system setup processes. This repository hosts a variety of scripts tailored for different automation and monitoring tasks.
+Bienvenue dans GitPP2324, une boîte à outils Python complète conçue pour rationaliser et améliorer les processus de communication, de configuration et de mise en place des systèmes. Ce dépôt contient une variété de scripts adaptés à différents tâches d'automatisation et de surveillance.
 
-## Features
+## Fonctionnalités
 
-- **CommunicationAPIS7.py**: Handles complex API interactions.
-- **HermesEnlighteNed.py**: Advanced data parsing and handling module.
-- **RaspFullSetup.py**: Automates the setup process for Raspberry Pi devices.
-- **RaspQuickLaunch.py**: Provides quick configurations for Raspberry Pi.
-- **WatchDogeSupercharged.py**: A robust monitoring and alerting system.
-- **ip_addresses.py**: Utility to manage and track IP addresses dynamically.
+- **CommunicationAPIS7.py** : Gère les interactions complexes avec les API.
+- **HermesEnlighteNed.py** : Module avancé de traitement et d'analyse de données.
+- **RaspFullSetup.py** : Automatise le processus de configuration pour les appareils Raspberry Pi.
+- **RaspQuickLaunch.py** : Fournit des configurations rapides pour Raspberry Pi.
+- **WatchDogeSupercharged.py** : Un système robuste de surveillance et d'alerte.
+- **ip_addresses.py** : Utilitaire pour gérer et suivre dynamiquement les adresses IP.
 
-## Configuration Files
+## Fichiers de configuration
 
-- **configDoge.json**: Configuration settings for the WatchDogeSupercharged module.
-- **configHermes.json**: Settings for the HermesEnlighteNed module.
+- **configDoge.json** : Paramètres de configuration pour le module WatchDogeSupercharged.
+- **configHermes.json** : Paramètres pour le module HermesEnlighteNed.
 
-## Quick Start
+## Démarrage rapide
 
-1. Clone the repository:
+1. Clonez le dépôt :
    ```bash
    git clone https://github.com/Sebastian0211-vs/GitPP2324.git
    ```
-2. Run the desired script:
+2. Exécutez le script souhaité :
    ```bash
-   python3 <script_name>.py
+   python3 <nom_du_script>.py
    ```
 
-## Contributing
+## Contribution
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Les contributions sont ce qui rend la communauté open source si incroyable pour apprendre, inspirer et créer. Toutes les contributions que vous faites sont **grandement appréciées**.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Forkez le projet
+2. Créez votre branche de fonctionnalités (`git checkout -b feature/FeatureIncroyable`)
+3. Commitez vos changements (`git commit -m 'Ajouter une FeatureIncroyable'`)
+4. Poussez vers la branche (`git push origin feature/FeatureIncroyable`)
+5. Ouvrez une Pull Request
 
-## License
+## Licence
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distribué sous la licence MIT. Voir le fichier `LICENSE` pour plus d'informations.
 
 ## Contact
 
 Sebastian Morsch - sebastian.morsch@edu.vs.ch
 
-Project Link: [https://github.com/Sebastian0211-vs/GitPP2324](https://github.com/Sebastian0211-vs/GitPP2324)
+Lien du projet : [https://github.com/Sebastian0211-vs/GitPP2324](https://github.com/Sebastian0211-vs/GitPP2324)
