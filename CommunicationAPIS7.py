@@ -1,131 +1,101 @@
 #-*- coding: utf-8 -*-
-import snap7
-import re
-import variablesAPI # Assuming you named the module like this
+import snap7  # Import Snap7 library to handle communication with Siemens PLCs
+import re     # Import regex module for string operations
+import variablesAPI
 
+# Sample test block to check connectivity and basic operations outside the main project
 """
-plc_ip_addresses = ['172.16.2.80']
-plcs = []
+plc_ip_addresses = ['172.16.2.80']  # List of PLC IP addresses
+plcs = []  # List to store Snap7 client objects
 
 for ip_address in range(len(plc_ip_addresses)):
-	plcs.append(snap7.client.Client())
-	plcs[ip_address].connect(plc_ip_addresses[ip_address], 0, 1)  # IP address, rack, slot
+    plcs.append(snap7.client.Client())  # Create a new Snap7 client
+    plcs[ip_address].connect(plc_ip_addresses[ip_address], 0, 1)  # Connect to the PLC at the given IP, rack, and slot
 """
 
-BYTE_LENGTH = 1
-WORD_LENGTH = 2  # Bytes / Word, Int
-DOUBLE_WORD_LENGTH = 4  # Bytes / DWord, Real, IEC Time
-BYTE_START_OFFSET = 0
-NO_DB = 0
-
-"""
-def connection(ip_address):
-	client = snap7.client.Client()
-	print(f"Client: {client}")
-	error = client.connect(ip_address, 0, 1) # IP address, rack, slot
-	print(f"Connection error: {error}")
-
-def deconnection(client):
-	client.destroy()
-"""
+# Constants for different data types' lengths
+BYTE_LENGTH = 1  # Length of a Byte
+WORD_LENGTH = 2  # Length of a Word (2 Bytes) for Word, Int
+DOUBLE_WORD_LENGTH = 4  # Length of a Double Word (4 Bytes) for DWord, Real, IEC Time
+BYTE_START_OFFSET = 0  # Starting byte offset for bit extraction
+NO_DB = 0  # No specific DB (used for certain read/write areas)
 
 def getLength(type):
-	match type:
-		case "Bool": 
-			return BYTE_LENGTH
-		case "Int": 
-			return WORD_LENGTH
-		case "Word": 
-			return WORD_LENGTH
-		case "Byte": 
-			return DOUBLE_WORD_LENGTH
-		case "Time": 
-			return DOUBLE_WORD_LENGTH
-		case _: 
-			print("Invalid type")
+    """ Determine and return the length of the PLC data type """
+    match type:
+        case "Bool": 
+            return BYTE_LENGTH
+        case "Int": 
+            return WORD_LENGTH
+        case "Word": 
+            return WORD_LENGTH
+        case "Byte": 
+            return DOUBLE_WORD_LENGTH
+        case "Time": 
+            return DOUBLE_WORD_LENGTH
+        case _: 
+            print("Invalid type")  # Handle unexpected type input
 
 def extract_numbers(logical_address):
-	# Using regular expression to find numbers
-	numbers = re.findall(r'\d+', logical_address)
-	return [int(number) for number in numbers] if numbers else None # Return the list of numbers, or None if no number is found
+    """ Extract numerical values from a logical address string using regular expressions """
+    numbers = re.findall(r'\d+', logical_address)
+    return [int(number) for number in numbers] if numbers else None  # Convert found numbers to integers and return the list, or return None
 
-# TODO Finish
+""" Function to read memory from PLC, given a variable name """
 def readMemory(plc, variable):
-	type = variablesAPI.variables[variable]["Data Type"]
-	length = getLength(type)
-	#print(f"length: {length}")
-	logical_address = variablesAPI.variables[variable]["Logical Address"]
-	address = extract_numbers(logical_address)
-	start_address = address[0] if address != None else None
-	#print(f"start_address: {start_address}")
-	bit_offset = address[1] if len(address) == 2 else 0
-	#print(f"bit_offset: {bit_offset}")
+    type = variablesAPI.variables[variable]["Data Type"]  # Get the data type of the variable from the API
+    length = getLength(type)  # Get the length of the data based on its type
+    logical_address = variablesAPI.variables[variable]["Logical Address"]  # Get the logical address of the variable
+    address = extract_numbers(logical_address)  # Extract numerical address
+    start_address = address[0] if address != None else None  # Determine the start address
+    bit_offset = address[1] if len(address) == 2 else 0  # Determine the bit offset if available
 
-	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
-	match type:
-		case "Bool": 
-			value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)
-			return value
-		
-		case "Int": 
-			#value = int.from_bytes(reading, byteorder='big', signed=True)
-			value = snap7.util.get_int(reading, BYTE_START_OFFSET)
-			return value
-				
-		case "Byte": 
-			value = reading
-			return value
-		
-		case "Time": 
-			# TODO Useful ???
-			value = int.from_bytes(reading, byteorder='big', signed=False)
-			ms = value
-			s = ms // 1000
-			ms %= 1000
-			min = s // 60
-			s %= 60
-			h = min // 60
-			min %= 60
-			print(f"{h}h {min}min {s}s {ms}ms")
-			value = snap7.util.get_time(reading, BYTE_START_OFFSET)
-			return value
-			
-		case _: 
-			print("Invalid type")
-			return None
+    reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)  # Read data from PLC
+    match type:
+        case "Bool": 
+            value = snap7.util.get_bool(reading, BYTE_START_OFFSET, bit_offset)  # Get boolean value from the data
+            return value
+        case "Int": 
+            value = snap7.util.get_int(reading, BYTE_START_OFFSET)  # Get integer value from the data
+            return value
+        case "Byte": 
+            return reading  # Return raw byte data
+        case "Time": 
+            # Interpret bytes as time, displaying hours, minutes, seconds, milliseconds
+            value = snap7.util.get_time(reading, BYTE_START_OFFSET)  # Use snap7 utility to parse time
+            return value
+        case _: 
+            print("Invalid type")
+            return None
 
-# TODO Finish
+""" Function to write memory to PLC, given a variable name and a value to write """
 def writeMemory(plc, variable, value):
-	type = variablesAPI.variables[variable]["Data Type"]
-	length = getLength(type)
-	logical_address = variablesAPI.variables[variable]["Logical Address"]
-	address = extract_numbers(logical_address)
-	start_address = address[0] if address != None else None
-	bit_offset = address[1] if len(address) == 2 else 0
+    type = variablesAPI.variables[variable]["Data Type"]  # Get the data type of the variable from the API
+    length = getLength(type)  # Get the length of the data based on its type
+    logical_address = variablesAPI.variables[variable]["Logical Address"]  # Get the logical address of the variable
+    address = extract_numbers(logical_address)  # Extract numerical address
+    start_address = address[0] if address != None else None  # Determine the start address
+    bit_offset = address[1] if len(address) == 2 else 0  # Determine the bit offset if available
 
-	reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
-	match type:
-		case "Bool":
-			snap7.util.set_bool(reading, BYTE_START_OFFSET, bit_offset, value)   
-			plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, reading)
+    reading = plc.read_area(snap7.types.Areas.MK, NO_DB, start_address, length)
+    match type:
+        case "Bool":
+            snap7.util.set_bool(reading, BYTE_START_OFFSET, bit_offset, value)  # Set boolean value in the data
+            plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, reading)  # Write back the modified data
+        case "Byte":
+            plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)  # Write byte data directly
+        case "Int":
+            value = value.to_bytes(length, byteorder='big')  # Convert integer to bytes
+            plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)  # Write integer data
+        case "Time":
+            # Set and write time data after deciding on the format
+            snap7.util.set_time(reading, BYTE_START_OFFSET, value)  # Set time data
+        case _:
+            print("Invalid type")
 
-		case "Byte": # Useful ???
-			plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)
-
-		case "Int":
-			value = value.to_bytes(length, byteorder='big')
-			plc.write_area(snap7.types.Areas.MK, NO_DB, start_address, value)
-			#snap7.util.set_int(reading, BYTE_START_OFFSET, value)
-
-		case "Time":
-			# TODO when format decided
-			snap7.util.set_time(reading, BYTE_START_OFFSET, value)  # value's format: '22:3:57:28.192'
-
-		case _:
-			print("Invalid type")
-
+# Uncomment for functional testing of reading from configured PLCs
 """
 for plc in plcs:
-	print("-----------------------------------------------")
-	readMemory(plc, "Mw_API_CVEntree")
+    print("-----------------------------------------------")
+    readMemory(plc, "Mw_API_CVEntree")
 """
