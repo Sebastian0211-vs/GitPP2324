@@ -14,7 +14,7 @@ variables = {
     "Mx_master_pause": {"Data Type": "Bool", "Logical Address": "%M320.0"},
     "Mx_master_multi_possible": {"Data Type": "Bool", "Logical Address": "%M320.2"},
     "Mx_master_multi+de3": {"Data Type": "Bool", "Logical Address": "%326.2"},
-    "Mx_master_demande_multi": {"Data Type": "Bool", "Logical Address": "%M301.6"},
+    "Mx_master_demande_mode_multi": {"Data Type": "Bool", "Logical Address": "%M301.6"},
     "Mx_master_alarme_urgence": {"Data Type": "Bool", "Logical Address": "%M325.0"},
     "Mx_master_quittance_obstruation": {"Data Type": "Bool", "Logical Address": "%M325.3"},
     "Mx_master_quittance_urgence": {"Data Type": "Bool", "Logical Address": "%M325.1"},
