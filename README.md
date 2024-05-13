@@ -44,6 +44,7 @@ Distribué sous la licence MIT. Voir le fichier `LICENSE` pour plus d'informatio
 ## Contact
 
 Sebastian Morsch - sebastian.morsch@edu.vs.ch
+
 Louis Schanen - louis.schanen@edu.vs.ch
 
 Lien du projet : [https://github.com/Sebastian0211-vs/GitPP2324](https://github.com/Sebastian0211-vs/GitPP2324)
