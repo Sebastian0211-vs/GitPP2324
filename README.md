@@ -1,30 +1,48 @@
 # GitPP2324
 
-Le projet Net and Light vise à développer et à maintenir un système avancé pour un circuit à billes modulaire, utilisant la programmation d'automates Siemens, des Raspberry Pi pour la logique de contrôle, et une infrastructure réseau pour la communication entre les cellules du circuit.
+Welcome to GitPP2324, a comprehensive Python toolkit designed to streamline and enhance communications, configuration, and system setup processes. This repository hosts a variety of scripts tailored for different automation and monitoring tasks.
 
-## Introduction
+## Features
 
-Ce système permet à chaque châssis de circuit à billes d'être configuré dynamiquement via une interface web, offrant une flexibilité maximale pour l'expérimentation et l'innovation dans la conception du circuit. Les scripts Python jouent un rôle central dans la surveillance et la gestion du circuit, avec un accent particulier sur la simplicité d'utilisation et la fiabilité.
+- **CommunicationAPIS7.py**: Handles complex API interactions.
+- **HermesEnlighteNed.py**: Advanced data parsing and handling module.
+- **RaspFullSetup.py**: Automates the setup process for Raspberry Pi devices.
+- **RaspQuickLaunch.py**: Provides quick configurations for Raspberry Pi.
+- **WatchDogeSupercharged.py**: A robust monitoring and alerting system.
+- **ip_addresses.py**: Utility to manage and track IP addresses dynamically.
 
-## Caractéristiques
+## Configuration Files
 
-- **Architecture Modulaire** : Facilite l'ajout, la suppression et la reconfiguration des cellules du circuit.
-- **Interface Web de Configuration** : Permet aux utilisateurs de configurer la disposition des cellules d'un châssis à travers une interface utilisateur conviviale.
-- **Surveillance en Temps Réel** : Utilise des scripts Python pour surveiller l'état de chaque cellule et signaler les pannes éventuelles.
-- **Mise à Jour Automatisée** : Les scripts peuvent être mis à jour automatiquement sur chaque Raspberry Pi via un repository Git centralisé.
+- **configDoge.json**: Configuration settings for the WatchDogeSupercharged module.
+- **configHermes.json**: Settings for the HermesEnlighteNed module.
 
-## Mise en Place de l'environnement de travail
+## Quick Start
 
-Afin de pouvoir participer à la création du projet en équipe il a été nécessaire de travailler avec GitHub. 
- 1. Créer un compte GitHub
- 2. Fork le projet GitPP2324
- 3. Installer Git Desktop
- 4. Se connecter et cloner le fork
- 5. Contribution dossier Parent
- 6. L'Application permet d'ouvrir le dossier cloner via VSCode.
- 7. Sur VSCode changer de Branche et travailler sur la branche "BDT"
- 8. Ecrire / mettre à jour du code
- 9. Commit avec un message décrivant le travail effectué
- 10. Aller sur sa page Fork et request un pull
- 11. Le Chef Net and Light doit accepter le merge
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Sebastian0211-vs/GitPP2324.git
+   ```
+2. Run the desired script:
+   ```bash
+   python3 <script_name>.py
+   ```
 
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+
+Sebastian Morsch - sebastian.morsch@edu.vs.ch
+
+Project Link: [https://github.com/Sebastian0211-vs/GitPP2324](https://github.com/Sebastian0211-vs/GitPP2324)
