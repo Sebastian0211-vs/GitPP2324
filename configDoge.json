@@ -1,0 +1,39 @@
+{
+    "logging": {
+      "filename": "apps.log",
+      "filemode": "w",
+      "format": "%(name)s - %(levelname)s - %(message)s",
+      "level": "INFO"
+    },
+    "scheduler": {
+      "interval_seconds": 1.5
+    },
+    "flask": {
+      "host": "0.0.0.0",
+      "port": 8000
+    },
+    "sound_file": "nuke.mp3",
+    "requests": [
+        "Mx_master_demande_mode_multi",
+        "Mx_master_alarme_urgence",
+        "Mx_master_alarme_obstruation",
+        "Mx_master_quittance_obstruation",
+        "Mx_master_quittance_urgence",
+        "Mw_master_nb_billes_sortie_normal",
+        "Mw_master_nb_billes_sortie_secours",
+        "Mw_master_nb_billes_entree",
+        "Mx_master_quittance_surveillance_bille",
+        "Mx_API_C1_attention","Mx_API_C1_alerte",
+        "Mx_API_C2_attention","Mx_API_C2_alerte",
+        "Mx_API_C3_attention","Mx_API_C3_alerte",
+        "Mx_API_C4_attention","Mx_API_C4_alerte", 
+        "Mx_master_pause",
+        "Mx_master_start",
+        "Mx_master_quittance_distribution",
+        "Mx_master_quittance_sortie_secours",
+        "Mx_master_alarme_surveillance_bille"
+    ],
+
+    "IP_Turtle": "172.16.0.2"
+  }
+  
