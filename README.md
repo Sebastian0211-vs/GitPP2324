@@ -19,11 +19,9 @@ Bienvenue dans GitPP2324, une boîte à outils Python complète conçue pour rat
 ## Démarrage rapide
 
 1. Clonez le dépôt :
+
    ```bash
    git clone https://github.com/Sebastian0211-vs/GitPP2324.git
-   ```
-2. Exécutez le script souhaité :
-   ```bash
    python3 <nom_du_script>.py
    ```
 
