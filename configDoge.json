@@ -1,59 +1,55 @@
-# Configuration file for the application settings
 {
     "logging": {
-      # The name of the log file where all the logs will be stored
-      "filename": "apps.log",
-      # The mode in which the log file will be opened
-      # 'w' stands for write mode which means the file will be overwritten every time the application is started
-      "filemode": "w",
-      # The format of the log messages
-      # '%(name)s' will be replaced with the logger's name
-      # '%(levelname)s' will be replaced with the level of the log message (e.g., INFO, DEBUG)
-      # '%(message)s' will be replaced with the actual log message
-      "format": "%(name)s - %(levelname)s - %(message)s",
-      # The minimum level of log messages to be handled
-      # 'INFO' level includes messages at INFO level and above (WARNING, ERROR, CRITICAL)
-      "level": "INFO"
+        // Nom du fichier dans lequel les logs seront écrits
+        "filename": "apps.log",
+        
+        // Mode d'ouverture du fichier de log (w pour écriture, a pour ajout)
+        "filemode": "w",
+        
+        // Format des messages de log, incluant le nom du logger, le niveau de log et le message
+        "format": "%(name)s - %(levelname)s - %(message)s",
+        
+        // Niveau de log minimum (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+        "level": "INFO"
     },
     "scheduler": {
-      # The interval at which the scheduler will run, in seconds
-      "interval": 2.3
+        // Intervalle de temps (en secondes) pour le scheduler
+        "interval": 2.3
     },
     "flask": {
-      # The host IP address on which the Flask application will run
-      # '0.0.0.0' means the application will be accessible from any IP address
-      "host": "0.0.0.0",
-      # The port on which the Flask application will listen for incoming requests
-      "port": 8000
+        // Adresse hôte sur laquelle l'application Flask écoute
+        "host": "0.0.0.0",
+        
+        // Port sur lequel l'application Flask écoute
+        "port": 8000
     },
-    # The file path of the sound file to be used
+    // Chemin du fichier sonore utilisé
     "sound_file": "nuke.mp3",
+    // Liste de requêtes ou actions spécifiques à gérer par le système
     "requests": [
-        # List of request types handled by the application
-        # Each entry corresponds to a specific request or event type
-        "Mx_master_demande_mode_multi",         # Request to switch to multi-mode
-        "Mx_master_alarme_urgence",             # Urgent alarm request
-        "Mx_master_alarme_obstruation",         # Obstruction alarm request
-        "Mx_master_quittance_obstruation",      # Obstruction clearance acknowledgement
-        "Mx_master_quittance_urgence",          # Urgent clearance acknowledgement
-        "Mw_master_nb_billes_sortie_normal",    # Number of normal exit balls
-        "Mw_master_nb_billes_sortie_secours",   # Number of emergency exit balls
-        "Mw_master_nb_billes_entree",           # Number of entry balls
-        "Mx_master_quittance_surveillance_bille", # Ball monitoring clearance acknowledgement
-        "Mx_API_C1_attention",                  # API C1 attention request
-        "Mx_API_C1_alerte",                     # API C1 alert request
-        "Mx_API_C2_attention",                  # API C2 attention request
-        "Mx_API_C2_alerte",                     # API C2 alert request
-        "Mx_API_C3_attention",                  # API C3 attention request
-        "Mx_API_C3_alerte",                     # API C3 alert request
-        "Mx_API_C4_attention",                  # API C4 attention request
-        "Mx_API_C4_alerte",                     # API C4 alert request
-        "Mx_master_pause",                      # Pause request
-        "Mx_master_start",                      # Start request
-        "Mx_master_quittance_distribution",     # Distribution clearance acknowledgement
-        "Mx_master_quittance_sortie_secours",   # Emergency exit clearance acknowledgement
-        "Mx_master_alarme_surveillance_bille"   # Ball monitoring alarm request
+        "Mx_master_demande_mode_multi",
+        "Mx_master_alarme_urgence",
+        "Mx_master_alarme_obstruation",
+        "Mx_master_quittance_obstruation",
+        "Mx_master_quittance_urgence",
+        "Mw_master_nb_billes_sortie_normal",
+        "Mw_master_nb_billes_sortie_secours",
+        "Mw_master_nb_billes_entree",
+        "Mx_master_quittance_surveillance_bille",
+        "Mx_API_C1_attention",
+        "Mx_API_C1_alerte",
+        "Mx_API_C2_attention",
+        "Mx_API_C2_alerte",
+        "Mx_API_C3_attention",
+        "Mx_API_C3_alerte",
+        "Mx_API_C4_attention",
+        "Mx_API_C4_alerte",
+        "Mx_master_pause",
+        "Mx_master_start",
+        "Mx_master_quittance_distribution",
+        "Mx_master_quittance_sortie_secours",
+        "Mx_master_alarme_surveillance_bille"
     ],
-    # The IP address of the Turtle device
+    // Adresse IP de la machine Turtle
     "IP_Turtle": "172.16.0.2"
 }
