@@ -144,12 +144,15 @@ def get_info():
                 for ip_address in ip.ip_addresses.values():
                     try:
                         if not triggered:
+                            
                             response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/True")
-                            if ip_address == ip.ip_addresses.values()[-1]:
+                            if ip_address == list(ip.ip_addresses.values())[-1]:
+                                print("Je passe triggered à vrai")
                                 triggered = True
                         else:
                             response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/False")
                             if ip_address == ip.ip_addresses.values()[-1]:
+                                print("je passe triggered à faux")
                                 triggered = False
                         logging.info(response.json())
                     except Exception as e:

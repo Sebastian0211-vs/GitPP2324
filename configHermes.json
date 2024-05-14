@@ -8,7 +8,7 @@
     "Var_API_Out": ["Mw_API_CVSortieStandard", "Mw_API_CVSortieSecours", "Mw_API_CVEntree"],
     "Var_API_In": ["Mw_master_nb_billes_sortie_normal", "Mw_master_nb_billes_sortie_secours", "Mw_master_nb_billes_entree"],
     "id_chassis": 0,
-    "modes_possibles": ["mono", "multi"],
+    "possibles_modes": ["mono", "multi"],
     "logging": {
         "file_path": "/home/pi/Desktop/hermes.log",
         "log_level": "INFO"
@@ -42,13 +42,13 @@
         "launch": "~/Desktop/HermesEnlighteNed.py",
 
         "local_file_1" : "HermesEnlighteNed.py",
-        "local_file_2" : "ip_adresses.py",
+        "local_file_2" : "ip_addressesRasp.py",
         "local_file_3" : "CommunicationAPIS7.py",
         "local_file_4" : "variablesAPI.py",
         "local_file_5" : "configHermes.json",
 
         "remote_file_1" : "/home/pi/Desktop/HermesEnlighteNed.py",
-        "remote_file_2" : "/home/pi/Desktop/ip_adresses.py",
+        "remote_file_2" : "/home/pi/Desktop/ip_addresses.py",
         "remote_file_3" : "/home/pi/Desktop/CommunicationAPIS7.py",
         "remote_file_4" : "/home/pi/Desktop/variablesAPI.py",
         "remote_file_5" : "/home/pi/Desktop/configHermes.json"

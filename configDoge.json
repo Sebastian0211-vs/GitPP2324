@@ -6,7 +6,7 @@
       "level": "INFO"
     },
     "scheduler": {
-      "interval_seconds": 1.5
+      "interval": 2.3
     },
     "flask": {
       "host": "0.0.0.0",

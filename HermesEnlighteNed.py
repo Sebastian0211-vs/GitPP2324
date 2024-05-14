@@ -14,7 +14,7 @@ import RPi.GPIO as GPIO
 import time
 
 # Chargement de la configuration à partir d'un fichier JSON
-with open('configHermes.json', 'r') as config_file:
+with open('/home/pi/Desktop/configHermes.json', 'r') as config_file:
     config = json.load(config_file)
 
 # Configuration des GPIO pour le Raspberry Pi

@@ -43,12 +43,11 @@ local_file_4 = config['LOCAL_file']['local_file_4']
 local_file_5 = config['LOCAL_file']['local_file_5']
 
 
-
-target_dest_1 = config['LOCAL_file']['target_dest_1']
-target_dest_2 = config['LOCAL_file']['target_dest_2']
-target_dest_3 = config['LOCAL_file']['target_dest_3']
-target_dest_4 = config['LOCAL_file']['target_dest_4']
-target_dest_5 = config['LOCAL_file']['target_dest_5']
+target_dest_1 = config['LOCAL_file']['remote_file_1']
+target_dest_2 = config['LOCAL_file']['remote_file_2']
+target_dest_3 = config['LOCAL_file']['remote_file_3']
+target_dest_4 = config['LOCAL_file']['remote_file_4']
+target_dest_5 = config['LOCAL_file']['remote_file_5']
 
 
 def check_pass(ip,username,password):
