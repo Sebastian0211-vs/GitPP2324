@@ -61,23 +61,23 @@ def job():
 
     NombreAPIConnceted = 0
 
-    multi_possible(NombreAPIConnceted)
-    print("J'ai fais mulit possible")
+    NombreAPIConnceted=multi_possible(NombreAPIConnceted)
     nombremultisql = 2
 
     checkplusde3(nombremultisql)
 
-    get_info()
+    get_info(NombreAPIConnceted)
 
     compteur_bille()
 
     deconnection()
     logging.info('Job finished')
     print(f"Execution time: {time.time() - start_time}")
+    scheduler.add_job(job)
     print("+--------------------------------------+")
 
 valid_request = config['requests']
-print(valid_request)
+
 def compteur_bille():
     A = np.zeros(3, dtype=int)
     i = 0
@@ -115,12 +115,13 @@ def compteur_bille():
         pool.join()
 
 triggered= False
-def get_info():
+def get_info(NombreAPIConnceted):
     def fetch_info(ip_address, request):
+        nonlocal NombreAPIConnceted
         global triggered
         try:
             response = requests.get(f"http://{ip_address['RASP_catch']}:8000/trigger/{request}")
-            print(ip_address['API'], ": Request: ", request, "Response: ", response.json())
+            
 
             if request.startswith("Mx_API_C") and response.status_code == 200:
                 print("j'ai reçu une alerte True")
@@ -136,28 +137,36 @@ def get_info():
                     print(response.json())
                     logging.info(response.json())
 
-            if response.status_code == 200:
-
-
+            if response.status_code == 200 and request.startswith("Mx"):
+                print(ip_address['API'], ": Request: ", request, "Response: ", response.json())
                 logging.info(response.json())    
-
+                compteur=0
                 for ip_address in ip.ip_addresses.values():
                     try:
-                        if not triggered:
-                            
-                            response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/True")
-                            if ip_address == list(ip.ip_addresses.values())[-1]:
-                                print("Je passe triggered à vrai")
-                                triggered = True
-                        else:
-                            response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/False")
-                            if ip_address == ip.ip_addresses.values()[-1]:
-                                print("je passe triggered à faux")
-                                triggered = False
+                        compteur += 1 
+                        response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/True")
+                        if compteur == NombreAPIConnceted:
+                            for ip_address in ip.ip_addresses.values():
+                                try:
+                                    response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/False")
+                                except Exception as e:
+                                    logging.error(e)
+                        
                         logging.info(response.json())
                     except Exception as e:
                         logging.error(e)
                 return
+            
+            elif response.status_code == 200:
+                print(ip_address['API'], ": Request: ", request, "Response: ", response.json())
+                logging.info(response.json())
+                for ip_address in ip.ip_addresses.values():
+                    try:
+                        response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/True")
+                        logging.info(response.json())
+                    except Exception as e:
+                        logging.error(e)
+
             else:
                 logging.error(response.json())
         except Exception as e:
@@ -175,7 +184,7 @@ def multi_possible(NombreAPIConnceted):
         nonlocal NombreAPIConnceted
         try:
             checker = requests.get(f"http://{ip_address['RASP_catch']}:8000/check_possible/{ip_address['API']}")
-            print(checker.json())
+
             if checker.status_code == 200:
                 multi = requests.get(f"http://{ip_address['RASP_catch']}:8000/connected")
                 NombreAPIConnceted += 1
@@ -187,6 +196,7 @@ def multi_possible(NombreAPIConnceted):
     pool.map(check_api, ip.ip_addresses.values())
     pool.close()
     pool.join()
+    
 
     def set_multi(ip_address, enabled):
         try:
@@ -200,6 +210,7 @@ def multi_possible(NombreAPIConnceted):
     pool.map(lambda ip_addr: set_multi(ip_addr, enabled), ip.ip_addresses.values())
     pool.close()
     pool.join()
+    return NombreAPIConnceted
 
 def SOS_Warning(times, base_url,color,position):
 
@@ -264,7 +275,7 @@ def deconnection():
     pool.join()
 
 scheduler = BackgroundScheduler(daemon=True)
-scheduler.add_job(job, 'interval',  seconds=config['scheduler']['interval'])
+scheduler.add_job(job)
 
 scheduler.start()
 

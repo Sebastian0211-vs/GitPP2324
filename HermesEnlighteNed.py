@@ -172,6 +172,7 @@ def demande_multi(request, VAR):
         try:
             if VAR == "True":
                 commS7.writeMemory(CONNECTED_PLC, request, True)
+                logging.info(f"Sortie set for {request}")
             else:
                 commS7.writeMemory(CONNECTED_PLC, request, False)
             return jsonify(message=f"Sortie set for {request}"), 200
