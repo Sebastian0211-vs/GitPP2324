@@ -1,13 +1,13 @@
 #-*- coding: utf-8 -*-
 from flask import Flask, jsonify  # Imports Flask class and jsonify function from the flask module
-import ip_addresses as ip  # Imports the ip_addresses module
+import ip_addresses as ip
 import requests  # Imports the requests module to make HTTP requests
 import os
 import logging  # Imports the logging module for logging messages
-import CommunicationAPIS7 as commS7  # Imports the CommunicationAPIS7 module
+import CommunicationAPIS7 as commS7
 import snap7  # Imports the snap7 module for working with Siemens S7 PLCs
 import json  # Imports the json module for parsing and generating JSON data
-import variablesAPI  # Imports the variablesAPI module which presumably defines various API-related variables
+import variablesAPI
 from threading import Lock  # Imports the Lock class from the threading module to handle threading synchronization
 from mysql.connector import connect  # Imports the connect function from mysql.connector module for database connections
 import RPi.GPIO as GPIO  # Imports the RPi.GPIO module for controlling Raspberry Pi GPIO channels
