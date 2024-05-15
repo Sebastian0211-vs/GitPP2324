@@ -1,5 +1,5 @@
 #-*- coding: utf-8 -*-
-from flask import Flask, jsonify  # Imports Flask class and jsonify function from the flask module
+from flask import Flask, jsonify  # Import Flask to create a web app and jsonify to return JSON responses
 import ip_addresses as ip
 import requests  # Imports the requests module to make HTTP requests
 import os
