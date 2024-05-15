@@ -1,31 +1,18 @@
 {
     "logging": {
-        // Nom du fichier dans lequel les logs seront écrits
         "filename": "apps.log",
-        
-        // Mode d'ouverture du fichier de log (w pour écriture, a pour ajout)
         "filemode": "w",
-        
-        // Format des messages de log, incluant le nom du logger, le niveau de log et le message
         "format": "%(name)s - %(levelname)s - %(message)s",
-        
-        // Niveau de log minimum (DEBUG, INFO, WARNING, ERROR, CRITICAL)
         "level": "INFO"
     },
     "scheduler": {
-        // Intervalle de temps (en secondes) pour le scheduler
         "interval": 2.3
     },
     "flask": {
-        // Adresse hôte sur laquelle l'application Flask écoute
         "host": "0.0.0.0",
-        
-        // Port sur lequel l'application Flask écoute
         "port": 8000
     },
-    // Chemin du fichier sonore utilisé
     "sound_file": "nuke.mp3",
-    // Liste de requêtes ou actions spécifiques à gérer par le système
     "requests": [
         "Mx_master_demande_mode_multi",
         "Mx_master_alarme_urgence",
@@ -50,6 +37,5 @@
         "Mx_master_quittance_sortie_secours",
         "Mx_master_alarme_surveillance_bille"
     ],
-    // Adresse IP de la machine Turtle
     "IP_Turtle": "172.16.0.2"
 }
