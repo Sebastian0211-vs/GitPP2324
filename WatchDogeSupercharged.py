@@ -207,7 +207,11 @@ def multi_possible(NombreAPIConnceted):
             if checker.status_code == 200:  # If the PLC is accessible
                 multi = requests.get(f"http://{ip_address['RASP_catch']}:8000/connected")
                 NombreAPIConnceted += 1  # If the PLC is connected
-                print(f"{ip_address['API']} : API connected = {NombreAPIConnceted}")
+                print(f"{ip_address['API']} : API connected ")
+
+            else:
+                print(f"{ip_address['API']} : API not connected")
+
         except Exception as e:
             logging.error(e)
 
