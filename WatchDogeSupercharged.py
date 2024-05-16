@@ -2,7 +2,7 @@ from flask import Flask, jsonify  # Import Flask to create a web app and jsonify
 from apscheduler.schedulers.background import BackgroundScheduler  # Import APScheduler for background task scheduling
 from multiprocessing.dummy import Pool as ThreadPool  # Import ThreadPool for parallel task execution
 import time
-import ip_addresses as ip
+from ip_addresses import fetch_latest_ip_addresses  # Import the fetch_latest_ip_addresses function from ip_addresses.py
 import requests  # Imports the requests module to make HTTP requests
 import logging  # Imports the logging module for logging messages
 import numpy as np  # Import NumPy for numerical operations
@@ -12,16 +12,19 @@ import json  # Imports the json module for parsing and generating JSON data
 # Chargement de la configuration à partir d'un fichier JSON
 with open('configDoge.json', 'r') as config_file:
     config = json.load(config_file)
+grosse_horloge = time.time()
+running_time = time.time()
 
+def create_logs():
 # Use the configuration
-logging.basicConfig(
-    filename=config['logging']['filename'],
-    filemode=config['logging']['filemode'],
-    format=config['logging']['format'],
-    level=getattr(logging, config['logging']['level'])
-)
+    logging.basicConfig(
+        filename=config['logging']['filename'],
+        filemode=config['logging']['filemode'],
+        format=config['logging']['format'],
+        level=getattr(logging, config['logging']['level'])
+    )
 
-
+create_logs()
 print("""\
 
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡟⠋⠈⠙⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠤⢤⡀⠀⠀
@@ -57,6 +60,7 @@ app = Flask(__name__)
 
 
 def job():
+    global running_time
     """
     A scheduled job function to handle a series of tasks periodically. 
     It reschedules itself and logs execution time and completion.
@@ -67,24 +71,30 @@ def job():
 
     NombreAPIConnceted = 0
 
-    NombreAPIConnceted = multi_possible(NombreAPIConnceted)
+    NombreAPIConnceted = multi_possible(NombreAPIConnceted,fetch_latest_ip_addresses())
     nombremultisql = 2
 
-    checkplusde3(nombremultisql)
-    get_info(NombreAPIConnceted)
-    compteur_bille()
-    deconnection()
+    checkplusde3(nombremultisql,fetch_latest_ip_addresses())
+    get_info(NombreAPIConnceted,fetch_latest_ip_addresses())
+    compteur_bille(fetch_latest_ip_addresses())
+    deconnection(fetch_latest_ip_addresses())
 
     logging.info('Job finished')
     print(f"Execution time: {time.time() - start_time}")
+    print(f"Temps depuis le lancement : {time.time() - grosse_horloge}")
+    if time.time() - running_time > config['logging']['time_before_flush']:
+        # if the program has been running for more than an hour, delete the logs
+        open(config['logging']['filename'], 'w').close()
+        running_time = time.time()
+        create_logs()
 
     scheduler.add_job(job)  # Reschedule the job for future execution
     
-    print("+--------------------------------------+")
+    print("+--------------------------------------+")  # Print a separator to distinguish between different job executions
 
 valid_request = config['requests']
 
-def compteur_bille():
+def compteur_bille(ip_addresses):
     """ Computes the number of marbles in the circuit """
     A = np.zeros(3, dtype=int)  # Initialize an array to store counts of 'compteur_bille' with three zeros
     i = 0  # Counter for tracking successful API responses
@@ -101,13 +111,13 @@ def compteur_bille():
             logging.error(e)
             print("Error occurred during API request.")
 
-    pool = ThreadPool(len(ip.ip_addresses))  # Create a thread pool with a size equal to the number of IP addresses
-    pool.map(fetch_data, ip.ip_addresses.values())  # Map the fetch_data function to each IP address, running them concurrently
+    pool = ThreadPool(len(ip_addresses))  # Create a thread pool with a size equal to the number of IP addresses
+    pool.map(fetch_data, ip_addresses.values())  # Map the fetch_data function to each IP address, running them concurrently
     pool.close()  # Close the pool
     pool.join()   # and wait for all tasks to complete
 
     print(f"Matrice totale : {A}")
-    if i != len(ip.ip_addresses):  # Check if all PLC responses were successful
+    if i != len(ip_addresses):  # Check if all PLC responses were successful
         print("Erreur de compteur")
     else:
         # Function to send the total counts back to each PLC
@@ -118,13 +128,13 @@ def compteur_bille():
             except Exception as e:
                 logging.error(e)
         
-        pool = ThreadPool(len(ip.ip_addresses))  # Idem
-        pool.map(send_data, ip.ip_addresses.values())
+        pool = ThreadPool(len(ip_addresses))  # Idem
+        pool.map(send_data, ip_addresses.values())
         pool.close()
         pool.join()
 
 triggered= False
-def get_info(NombreAPIConnceted):
+def get_info(NombreAPIConnceted,ip_addresses):
     """
     Retrieves and processes information for each connected PLC based on predefined requests.
     It sends requests to each IP address for each type of configured request, processes the responses,
@@ -157,13 +167,13 @@ def get_info(NombreAPIConnceted):
                 print(ip_address['API'], ": Request: ", request, "Response: ", response.json())
                 logging.info(response.json())    
                 compteur = 0
-                for ip_address in ip.ip_addresses.values():
+                for ip_address in ip_addresses.values():
                     try:
                         compteur += 1 
                         response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/True")
                         # If all connected PLCs have responded, send a "reset" command.
                         if compteur == NombreAPIConnceted:
-                            for ip_address in ip.ip_addresses.values():
+                            for ip_address in ip_addresses.values():
                                 try:
                                     response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/False")
                                 except Exception as e:
@@ -178,7 +188,7 @@ def get_info(NombreAPIConnceted):
             elif response.status_code == 200:
                 print(ip_address['API'], ": Request: ", request, "Response: ", response.json())
                 logging.info(response.json())
-                for ip_address in ip.ip_addresses.values():
+                for ip_address in ip_addresses.values():
                     try:
                         response = requests.get(f"http://{ip_address['RASP_catch']}:8000/sortie/{request}/True")
                         logging.info(response.json())
@@ -190,14 +200,14 @@ def get_info(NombreAPIConnceted):
         except Exception as e:
             logging.error(e)
 
-    pool = ThreadPool(len(ip.ip_addresses) * len(valid_request))  # Idem
+    pool = ThreadPool(len(ip_addresses) * len(valid_request))  # Idem
     for request in valid_request:
-        pool.map(lambda ip_addr: fetch_info(ip_addr, request), ip.ip_addresses.values())
+        pool.map(lambda ip_addr: fetch_info(ip_addr, request), ip_addresses.values())
     pool.close()
     pool.join()
 
 
-def multi_possible(NombreAPIConnceted):
+def multi_possible(NombreAPIConnceted,ip_addresses):
     """ This function checks each PLC's connection status and updates the count of connected PLCs. """
     def check_api(ip_address):
         nonlocal NombreAPIConnceted
@@ -207,12 +217,16 @@ def multi_possible(NombreAPIConnceted):
             if checker.status_code == 200:  # If the PLC is accessible
                 multi = requests.get(f"http://{ip_address['RASP_catch']}:8000/connected")
                 NombreAPIConnceted += 1  # If the PLC is connected
-                print(f"{ip_address['API']} : API connected = {NombreAPIConnceted}")
+                print(f"{ip_address['API']} : API connected ")
+
+            else:
+                print(f"{ip_address['API']} : API not connected")
+
         except Exception as e:
             logging.error(e)
 
-    pool = ThreadPool(len(ip.ip_addresses))  # Idem
-    pool.map(check_api, ip.ip_addresses.values())
+    pool = ThreadPool(len(ip_addresses))  # Idem
+    pool.map(check_api, ip_addresses.values())
     pool.close()
     pool.join()
     
@@ -226,8 +240,8 @@ def multi_possible(NombreAPIConnceted):
     enabled = "True" if NombreAPIConnceted > 1 else "False"  # Enable multi-mode if more than one PLC is connected
     print(f"Mode multi {'disponible' if enabled == 'True' else 'indisponible'}")
     
-    pool = ThreadPool(len(ip.ip_addresses))  # Idem
-    pool.map(lambda ip_addr: set_multi(ip_addr, enabled), ip.ip_addresses.values())
+    pool = ThreadPool(len(ip_addresses))  # Idem
+    pool.map(lambda ip_addr: set_multi(ip_addr, enabled), ip_addresses.values())
     pool.close()
     pool.join()
 
@@ -264,7 +278,7 @@ def SOS_Warning(times, base_url,color,position):
 
             time.sleep(0.1)
 
-def checkplusde3(nombremultisql):
+def checkplusde3(nombremultisql,ip_addresses):
     """ Checks if the number of connected PLCs is equal or greater than 3. """
     def set_multinbr(ip_address, enabled):
         try:
@@ -275,13 +289,13 @@ def checkplusde3(nombremultisql):
     enabled = "True" if nombremultisql >= 3 else "False"
     print(f"Multi sur {'plus' if enabled == 'True' else 'moins'} de 3 châssis")
     
-    pool = ThreadPool(len(ip.ip_addresses))  # Idem
-    pool.map(lambda ip_addr: set_multinbr(ip_addr, enabled), ip.ip_addresses.values())
+    pool = ThreadPool(len(ip_addresses))  # Idem
+    pool.map(lambda ip_addr: set_multinbr(ip_addr, enabled), ip_addresses.values())
     pool.close()
     pool.join()
 
 
-def deconnection():
+def deconnection(ip_addresses):
     """ Disconnects all devices by sending a deconnection request to each IP address listed. """
     def disconnect(ip_address):
         try:
@@ -289,8 +303,8 @@ def deconnection():
         except Exception as e:
             logging.error(e)
 
-    pool = ThreadPool(len(ip.ip_addresses))  # Create a ThreadPool with a number of threads equal to the number of IP addresses
-    pool.map(disconnect, ip.ip_addresses.values())  # Use the pool to run the function on each value in ip_addresses concurrently
+    pool = ThreadPool(len(ip_addresses))  # Create a ThreadPool with a number of threads equal to the number of IP addresses
+    pool.map(disconnect, ip_addresses.values())  # Use the pool to run the function on each value in ip_addresses concurrently
     pool.close()  # Close the pool to prevent any more tasks from being submitted to it
     pool.join()  # Wait for all the worker threads to finish
 
