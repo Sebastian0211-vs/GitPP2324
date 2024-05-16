@@ -1,22 +1,20 @@
-import paramiko
+import paramiko  # Import paramiko for SSH and SFTP connectivity and operations.
 import os
-import requests
-import json
+import requests  # Imports the requests module to make HTTP requests
+import json  # Imports the json module for parsing and generating JSON data
 import ip_addresses as ip
-from mysql.connector import connect
+from mysql.connector import connect  # Imports the connect function from mysql.connector module for database connections
 
 
+with open('configHermes.json', 'r') as config_file:  # Opens the file in read mode
+    config = json.load(config_file)  # Loads the JSON content and converts it into a Python dictionary
 
-
-with open('configHermes.json', 'r') as config_file:
-    config = json.load(config_file)
-
+# Define a connection object
 conn = connect(
       user=config['Login_Turtle']['user'],
       password=config['Login_Turtle']['password'],
       host=config['Login_Turtle']['host'],
       database=config['Login_Turtle']['database'])
-
 
 
 for ip_adresses in ip.ip_addresses.values():
@@ -26,10 +24,6 @@ for ip_adresses in ip.ip_addresses.values():
         print(e)
 
 pi_disponibles = []
-
-
-
-
 
 username = config['RASP_login']['user']
 password = config['RASP_login']['password']
@@ -41,7 +35,6 @@ local_file_2 = config['LOCAL_file']['local_file_2']
 local_file_3 = config['LOCAL_file']['local_file_3']
 local_file_4 = config['LOCAL_file']['local_file_4']
 local_file_5 = config['LOCAL_file']['local_file_5']
-
 
 
 target_dest_1 = config['LOCAL_file']['remote_file_1']

@@ -1,12 +1,20 @@
 {
     "Login_Turtle": {
-        "user" : "root",
-        "password" : "billes1234",
-        "host" : "172.16.0.2",
-        "database" : "nuc_db"
+        "user": "root",
+        "password": "billes1234",
+        "host": "172.16.0.2",
+        "database": "nuc_db"
     },
-    "Var_API_Out": ["Mw_API_CVSortieStandard", "Mw_API_CVSortieSecours", "Mw_API_CVEntree"],
-    "Var_API_In": ["Mw_master_nb_billes_sortie_normal", "Mw_master_nb_billes_sortie_secours", "Mw_master_nb_billes_entree"],
+    "Var_API_Out": [
+        "Mw_API_CVSortieStandard", 
+        "Mw_API_CVSortieSecours", 
+        "Mw_API_CVEntree"
+    ],
+    "Var_API_In": [
+        "Mw_master_nb_billes_sortie_normal", 
+        "Mw_master_nb_billes_sortie_secours", 
+        "Mw_master_nb_billes_entree"
+    ],
     "id_chassis": 0,
     "possibles_modes": ["mono", "multi"],
     "logging": {
@@ -21,36 +29,34 @@
             "Position4": {"red": 19, "green": 16, "blue": 26, "white": 20},
             "Position5": {"red": 21, "green": 20, "blue": 7, "white": 8}
         },
-        "color_combination":{ 
+        "color_combination": { 
             "yellow": ["red", "green"],
             "cyan": ["green", "blue"],
             "magenta": ["red", "blue"]
-            },
-        "color_list": ["red","yellow","green","cyan","blue","magenta","white"]
+        },
+        "color_list": ["red", "yellow", "green", "cyan", "blue", "magenta", "white"]
     },
     "flask_app": {
         "host": "0.0.0.0",
         "port": 8000
     },
-
     "RASP_login": {
         "user": "pi",
         "password": "pi"
     },
-
     "LOCAL_file": {
         "launch": "~/Desktop/HermesEnlighteNed.py",
+        
+        "local_file_1": "HermesEnlighteNed.py",
+        "local_file_2": "ip_addressesRasp.py",
+        "local_file_3": "CommunicationAPIS7.py",
+        "local_file_4": "variablesAPI.py",
+        "local_file_5": "configHermes.json",
 
-        "local_file_1" : "HermesEnlighteNed.py",
-        "local_file_2" : "ip_addressesRasp.py",
-        "local_file_3" : "CommunicationAPIS7.py",
-        "local_file_4" : "variablesAPI.py",
-        "local_file_5" : "configHermes.json",
-
-        "remote_file_1" : "/home/pi/Desktop/HermesEnlighteNed.py",
-        "remote_file_2" : "/home/pi/Desktop/ip_addresses.py",
-        "remote_file_3" : "/home/pi/Desktop/CommunicationAPIS7.py",
-        "remote_file_4" : "/home/pi/Desktop/variablesAPI.py",
-        "remote_file_5" : "/home/pi/Desktop/configHermes.json"
+        "remote_file_1": "/home/pi/Desktop/HermesEnlighteNed.py",
+        "remote_file_2": "/home/pi/Desktop/ip_addresses.py",
+        "remote_file_3": "/home/pi/Desktop/CommunicationAPIS7.py",
+        "remote_file_4": "/home/pi/Desktop/variablesAPI.py",
+        "remote_file_5": "/home/pi/Desktop/configHermes.json"
     }
 }

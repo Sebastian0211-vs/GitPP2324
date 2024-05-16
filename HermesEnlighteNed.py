@@ -1,16 +1,16 @@
 #-*- coding: utf-8 -*-
-from flask import Flask, jsonify
+from flask import Flask, jsonify  # Import Flask to create a web app and jsonify to return JSON responses
 import ip_addresses as ip
-import requests
+import requests  # Imports the requests module to make HTTP requests
 import os
-import logging
+import logging  # Imports the logging module for logging messages
 import CommunicationAPIS7 as commS7
-import snap7
-import json
+import snap7  # Imports the snap7 module for working with Siemens S7 PLCs
+import json  # Imports the json module for parsing and generating JSON data
 import variablesAPI
-from threading import Lock
-from mysql.connector import connect
-import RPi.GPIO as GPIO
+from threading import Lock  # Imports the Lock class from the threading module to handle threading synchronization
+from mysql.connector import connect  # Imports the connect function from mysql.connector module for database connections
+import RPi.GPIO as GPIO  # Imports the RPi.GPIO module for controlling Raspberry Pi GPIO channels
 import time
 
 # Chargement de la configuration à partir d'un fichier JSON
@@ -34,7 +34,7 @@ conn = connect(
       host=config['Login_Turtle']['host'],
       database=config['Login_Turtle']['database'])
 
-errorled= False
+errorled = False
 
 # Initialisation du serveur Flask
 app = Flask(__name__)
@@ -138,7 +138,7 @@ def trigger(request):
             logging.error(f"Error in /trigger: {str(e)}")
             return jsonify(error=str(e)), 500
 
-#Route pour lire les données des compteur de billes
+# Route pour lire les données des compteurs de billes
 @app.route('/compteur_bille', methods=['GET'])
 def compteur_bille():
     with plc_lock:
@@ -152,7 +152,7 @@ def compteur_bille():
             logging.error(f"Error in /compteur_bille: {str(e)}")
             return jsonify(error=str(e)), 500
 
-# Route pour écrire les données des compteur de billes
+# Route pour écrire les données des compteurs de billes
 @app.route('/compteur_bille/<int:index>/<int:val>', methods=['GET'])
 def set_compteur_bille(index, val):
     with plc_lock:
@@ -180,7 +180,7 @@ def demande_multi(request, VAR):
             logging.error(f"Error in /sortie: {str(e)}")
             return jsonify(error=str(e)), 500
 
-# Route de deconnexion du PLC
+# Route de déconnexion du PLC
 @app.route('/deconnection', methods=['GET'])
 def deconnection():
     with plc_lock:
@@ -214,6 +214,7 @@ def setup_and_activate(position, colors, state):
         GPIO.setup(pin_number, GPIO.OUT)
         GPIO.output(pin_number, state)
 
+# Route pour allumer, de la couleur donnée, les LEDs d'une position donnée
 @app.route('/pin/<string:position>/<string:couleur>/high', methods=['GET'])
 def pin_HIGH(position, couleur):
     try:
@@ -237,6 +238,7 @@ def pin_HIGH(position, couleur):
     except Exception as e:
         return jsonify(error=str(e)), 500
 
+# Route pour éteindre, la couleur donnée, sur les LEDs d'une position donnée
 @app.route('/pin/<string:position>/<string:couleur>/low', methods=['GET'])
 def pin_LOW(position, couleur):
     try:
@@ -253,6 +255,7 @@ def pin_LOW(position, couleur):
     except Exception as e:
         return jsonify(error=str(e)), 500
 
+# Route pour éteindre toutes les LEDs
 @app.route('/reset', methods=['GET'])
 def reset_all_pins():
 
@@ -262,6 +265,7 @@ def reset_all_pins():
             GPIO.output(color_pin, GPIO.LOW)
     return jsonify({"message": "Tous les pins ont été réinitialisés à l'état LOW"}), 200
 
+# Route pour activer l'animation "rainbow" sur les LEDs d'une position donnée
 @app.route('/rainbow/<string:position>', methods=['GET'])
 def rainbow(position):
 
@@ -290,7 +294,8 @@ def rainbow(position):
             return jsonify(error="Position de cellule invalide"), 404
     except Exception as e:
         return jsonify(error=str(e)), 500
-    
+
+# Route pour allumer, de la couleur donnée, les LEDs de toutes les positions
 @app.route('/all/<string:couleur>', methods=['GET'])
 def all_pins_color(couleur):
     """Appliquer la couleur spécifiée à toutes les positions."""
@@ -306,12 +311,14 @@ def all_pins_color(couleur):
             return jsonify(message="Toutes les positions ont été mises en {0}".format(couleur)), 200
     except Exception as e:
         return jsonify(error=str(e)), 500
-    
+
+# Route pour arrêter ce script
 @app.route('/kill', methods=['GET'])
 def kill_script():
     logging.info("Kill script called")
     os._exit(0)
 
+# Gestion des erreurs
 @app.errorhandler(Exception)
 def handle_exception(e):
     global CONNECTED_PLC
