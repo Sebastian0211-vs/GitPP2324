@@ -36,7 +36,7 @@ def getLength(type):
         case _: 
             print("Invalid type")  # Handle unexpected type input
 
-def extract_numbers(logical_address):
+def extractNumbers(logical_address):
     """ Extract numerical values from a logical address string using regular expressions """
     numbers = re.findall(r'\d+', logical_address)
     return [int(number) for number in numbers] if numbers else None  # Convert found numbers to integers and return the list, or return None
@@ -46,7 +46,7 @@ def readMemory(plc, variable):
     type = variablesAPI.variables[variable]["Data Type"]  # Get the data type of the variable from the API
     length = getLength(type)  # Get the length of the data based on its type
     logical_address = variablesAPI.variables[variable]["Logical Address"]  # Get the logical address of the variable
-    address = extract_numbers(logical_address)  # Extract numerical address
+    address = extractNumbers(logical_address)  # Extract numerical address
     start_address = address[0] if address != None else None  # Determine the start address
     bit_offset = address[1] if len(address) == 2 else 0  # Determine the bit offset if available
 
@@ -73,7 +73,7 @@ def writeMemory(plc, variable, value):
     type = variablesAPI.variables[variable]["Data Type"]  # Get the data type of the variable from the API
     length = getLength(type)  # Get the length of the data based on its type
     logical_address = variablesAPI.variables[variable]["Logical Address"]  # Get the logical address of the variable
-    address = extract_numbers(logical_address)  # Extract numerical address
+    address = extractNumbers(logical_address)  # Extract numerical address
     start_address = address[0] if address != None else None  # Determine the start address
     bit_offset = address[1] if len(address) == 2 else 0  # Determine the bit offset if available
 
