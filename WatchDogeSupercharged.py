@@ -12,16 +12,19 @@ import json  # Imports the json module for parsing and generating JSON data
 # Chargement de la configuration à partir d'un fichier JSON
 with open('configDoge.json', 'r') as config_file:
     config = json.load(config_file)
+grosse_horloge = time.time()
+running_time = time.time()
 
+def create_logs():
 # Use the configuration
-logging.basicConfig(
-    filename=config['logging']['filename'],
-    filemode=config['logging']['filemode'],
-    format=config['logging']['format'],
-    level=getattr(logging, config['logging']['level'])
-)
+    logging.basicConfig(
+        filename=config['logging']['filename'],
+        filemode=config['logging']['filemode'],
+        format=config['logging']['format'],
+        level=getattr(logging, config['logging']['level'])
+    )
 
-
+create_logs()
 print("""\
 
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡟⠋⠈⠙⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠤⢤⡀⠀⠀
@@ -57,6 +60,7 @@ app = Flask(__name__)
 
 
 def job():
+    global running_time
     """
     A scheduled job function to handle a series of tasks periodically. 
     It reschedules itself and logs execution time and completion.
@@ -64,23 +68,29 @@ def job():
     print("+--------------------------------------+")
     logging.info('Job started')
     start_time = time.time()  # Capture the start time
-    ip_addresses = fetch_latest_ip_addresses()
+
     NombreAPIConnceted = 0
 
-    NombreAPIConnceted = multi_possible(NombreAPIConnceted,ip_addresses)
+    NombreAPIConnceted = multi_possible(NombreAPIConnceted,fetch_latest_ip_addresses())
     nombremultisql = 2
 
-    checkplusde3(nombremultisql,ip_addresses)
-    get_info(NombreAPIConnceted,ip_addresses)
-    compteur_bille(ip_addresses)
-    deconnection(ip_addresses)
+    checkplusde3(nombremultisql,fetch_latest_ip_addresses())
+    get_info(NombreAPIConnceted,fetch_latest_ip_addresses())
+    compteur_bille(fetch_latest_ip_addresses())
+    deconnection(fetch_latest_ip_addresses())
 
     logging.info('Job finished')
     print(f"Execution time: {time.time() - start_time}")
+    print(f"Temps depuis le lancement : {time.time() - grosse_horloge}")
+    if time.time() - running_time > config['logging']['time_before_flush']:
+        # if the program has been running for more than an hour, delete the logs
+        open(config['logging']['filename'], 'w').close()
+        running_time = time.time()
+        create_logs()
 
     scheduler.add_job(job)  # Reschedule the job for future execution
     
-    print("+--------------------------------------+")
+    print("+--------------------------------------+")  # Print a separator to distinguish between different job executions
 
 valid_request = config['requests']
 

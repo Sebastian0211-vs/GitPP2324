@@ -40,24 +40,6 @@ def fetch_latest_ip_addresses():
         
     }
 
-    # Display informations
-    print(ip_addresses)
-
-    print("+------------------------------------------------+")
-
-    print("IP1api : ", IP1api)
-    print("IP2api : ", IP2api)
-    print("IP3api : ", IP3api)
-
-
-
-    print("+------------------------------------------------+")
-
-    print("IP1raspCatch : ", IP1raspCatch)
-    print("IP2raspCatch : ", IP2raspCatch)
-    print("IP3raspCatch : ", IP3raspCatch)
-
-
     # Close the database connection
     conn.commit()
     conn.close()
