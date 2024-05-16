@@ -2,7 +2,7 @@ import paramiko  # Import paramiko for SSH and SFTP connectivity and operations.
 import os
 import requests  # Imports the requests module to make HTTP requests
 import json  # Imports the json module for parsing and generating JSON data
-from ip_addressesRasp import fetch_latest_ip_addresses   # Imports the fetch_latest_ip_addresses function from ip_addresses module
+from ip_addresses import fetch_latest_ip_addresses   # Imports the fetch_latest_ip_addresses function from ip_addresses module
 from mysql.connector import connect  # Imports the connect function from mysql.connector module for database connections
 
 
