@@ -2,7 +2,7 @@ import paramiko  # Import paramiko for SSH and SFTP connectivity and operations.
 import os
 import requests  # Imports the requests module to make HTTP requests
 import json  # Imports the json module for parsing and generating JSON data
-import ip_addresses as ip
+from ip_addressesRasp import fetch_latest_ip_addresses   # Imports the fetch_latest_ip_addresses function from ip_addresses module
 from mysql.connector import connect  # Imports the connect function from mysql.connector module for database connections
 
 
@@ -16,8 +16,9 @@ conn = connect(
       host=config['Login_Turtle']['host'],
       database=config['Login_Turtle']['database'])
 
+ip_addresses = fetch_latest_ip_addresses()
 
-for ip_adresses in ip.ip_addresses.values():
+for ip_adresses in ip_addresses.values():
     try:
         requests.get(f"http://{ip_adresses['RASP_catch']}:8000/kill")
     except Exception as e:
@@ -187,8 +188,8 @@ def ssh_and_run(ip,username,password,local_file, target_dest,command):
     except Exception as e : 
         print(f"Echec de l'exécution du script sur {ip}: {e}")
 
-for ip_adresses in ip.ip_addresses.values():
+for ip_adresses in ip_addresses.values():
     check_pass(ip_adresses,username,password)
 
 for ip_adresses in pi_disponibles :
-    ssh_and_run(ip,username,password,local_file_1,target_dest_1,Command)
+    ssh_and_run(ip_adresses,username,password,local_file_1,target_dest_1,Command)
