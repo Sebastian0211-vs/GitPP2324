@@ -39,10 +39,16 @@ Les contributions sont ce qui rend la communauté open source si incroyable pour
 
 Distribué sous la licence MIT. Voir le fichier `LICENSE` pour plus d'informations.
 
-## Contact
+## Chef suprême
 
 Sebastian Morsch - sebastian.morsch@edu.vs.ch
 
+## Sous Sous Chef
+
 Louis Schanen - louis.schanen@edu.vs.ch
+
+## Dessinateur de Chat
+
+Quelqu'un de peu important
 
 Lien du projet : [https://github.com/Sebastian0211-vs/GitPP2324](https://github.com/Sebastian0211-vs/GitPP2324)
