@@ -34,6 +34,19 @@ variables = {
     "Mx_API_C3_alerte": {"Data Type": "Bool", "Logical Address": "%M135.2"},
     "Mx_API_C4_attention": {"Data Type": "Bool", "Logical Address": "%M135.7"},
     "Mx_API_C4_alerte": {"Data Type": "Bool", "Logical Address": "%M135.3"},
+
+    #variables for modes gestion
+    "Mx_HMI_mode_temps": {"Data Type": "Bool", "Logical Address": "%M200.0"},
+    "Mx_HMI_mode_bille": {"Data Type": "Bool", "Logical Address": "%M200.1"},
+    "Mx_HMI_mode_infinity": {"Data Type": "Bool", "Logical Address": "%M200.2"},
+    "Mx_HMI_mode_multi": {"Data Type": "Bool", "Logical Address": "%M200.3"},
+    "Mx_HMI_validation_multi": {"Data Type": "Bool", "Logical Address": "%M220.3"},
+    "Mx_HMI_bloque_demande_multi": {"Data Type": "Bool", "Logical Address": "%M220.2"},
+    "Mw_HMI_selec_billes": {"Data Type": "Int", "Logical Address": "%MW520"},
+    "Md_HMI_selec_temps": {"Data Type": "Time", "Logical Address": "%MD600"},
+
+    
+
 }
 
 """
