@@ -49,6 +49,6 @@ Louis Schanen - louis.schanen@edu.vs.ch
 
 ## Dessinateur de Chat
 
-Quelqu'un de peu important
+Quelqu'un de très peu important (Nieh)
 
 Lien du projet : [https://github.com/Sebastian0211-vs/GitPP2324](https://github.com/Sebastian0211-vs/GitPP2324)
