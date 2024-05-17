@@ -121,7 +121,7 @@ def multinbr(BOOL):
             return jsonify(message=f"Mode multi activé"), 200
         except Exception as e:
             logging.error(f"Error in /multinbr: {str(e)}")
-            return jsonify(error=str(e)), 500
+            return jsonify(error=str(e)), 500 
         
 # Route pour lire une variable du PLC
 @app.route('/trigger/<string:request>', methods=['GET'])
@@ -180,6 +180,55 @@ def demande_multi(request, VAR):
             logging.error(f"Error in /sortie: {str(e)}")
             return jsonify(error=str(e)), 500
 
+@app.route('/modes/<string:mode>/<string:VAR>', methods=['GET'])
+def modes(mode, VAR):
+    with plc_lock:
+        global CONNECTED_PLC
+        try:
+            if mode == "infini":
+                commS7.writeMemory(CONNECTED_PLC, "Mx_HMI_mode_infinity", VAR)
+                logging.info(f"Mode {mode} set at {VAR}")
+            if mode == "multi":
+                commS7.writeMemory(CONNECTED_PLC, "Mx_HMI_mode_multi", VAR)
+                logging.info(f"Mode {mode} set at {VAR}")
+            if mode == "validationmulti":
+                commS7.writeMemory(CONNECTED_PLC, "Mx_HMI_validation_multi", VAR)
+                logging.info(f"Mode {mode} set at {VAR}")
+            if mode == "bloquedemandemulti":
+                commS7.writeMemory(CONNECTED_PLC, "Mx_HMI_bloque_demande_multi", VAR)
+                logging.info(f"Mode {mode} set at {VAR}")
+            if mode == "billes":
+                commS7.writeMemory(CONNECTED_PLC, "Mx_HMI_mode_bille", VAR)
+                logging.info(f"Mode {mode} set at {VAR}")
+            if mode == "nbrebilles":
+                commS7.writeMemory(CONNECTED_PLC, "Mw_HMI_selec_billes", VAR)
+                logging.info(f"Mode {mode} set at {VAR}")
+            if mode == "temps":
+                commS7.writeMemory(CONNECTED_PLC, "Mx_HMI_mode_temps", VAR)
+                logging.info(f"Mode {mode} set at {VAR}")
+            if mode == "nbretemps":
+                commS7.writeMemory(CONNECTED_PLC, "Md_HMI_selec_temps", VAR)
+                logging.info(f"Mode {mode} set at {VAR}")
+            
+            return jsonify(message=f"Mode {mode} modifié"), 200
+        except Exception as e:
+            logging.error(f"Error in /modes: {str(e)}")
+            return jsonify(error=str(e)), 500
+
+@app.route('/lecture/modes', methods=['GET'])
+def lecturemodes():
+    with plc_lock:
+        global CONNECTED_PLC
+        try:
+            modes = []
+            for mode in possibles_modes:
+                modes.append(commS7.readMemory(CONNECTED_PLC, mode))
+            
+            return modes
+        except Exception as e:
+            logging.error(f"Error in /modes: {str(e)}")
+            return jsonify(error=str(e)), 500
+        
 # Route de déconnexion du PLC
 @app.route('/deconnection', methods=['GET'])
 def deconnection():
