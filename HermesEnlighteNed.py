@@ -265,6 +265,20 @@ def reset_all_pins():
             GPIO.output(color_pin, GPIO.LOW)
     return jsonify({"message": "Tous les pins ont été réinitialisés à l'état LOW"}), 200
 
+
+@app.route('/reset/<string:position>', methods=['GET'])
+def reset_pin(position):
+    try:
+        if position in valid_positions:
+            for color_pin in led_matrix[position].values():
+                GPIO.setup(color_pin, GPIO.OUT)
+                GPIO.output(color_pin, GPIO.LOW)
+            return jsonify(message=f"La position {position} a été réinitialisée"), 200
+        else:
+            return jsonify(error="Position de cellule invalide"), 404
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+    
 # Route pour activer l'animation "rainbow" sur les LEDs d'une position donnée
 @app.route('/rainbow/<string:position>', methods=['GET'])
 def rainbow(position):

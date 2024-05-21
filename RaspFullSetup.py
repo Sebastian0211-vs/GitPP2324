@@ -29,10 +29,6 @@ pi_disponibles = []
 username = config['RASP_login']['user']
 password = config['RASP_login']['password']
 
-
-username = config['RASP_login']['user']
-password = config['RASP_login']['password']
-
 Command = config['LOCAL_file']['launch'] 
 
 local_file_1 = config['LOCAL_file']['local_file_1']
@@ -49,18 +45,7 @@ target_dest_4 = config['LOCAL_file']['remote_file_4']
 target_dest_5 = config['LOCAL_file']['remote_file_5']
 
 
-def check_pass(ip,username,password):
-    global pi_disponibles
-    try :
-        client = paramiko.SSHClient()
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        client.connect(ip, username=username, password=password)
 
-        print(f"{ip} : Connexion réussi, ajout à la liste de Raspberry valide : ")
-        pi_disponibles.append(ip)
-
-    except Exception as e:
-        print(f"{ip} : Failed to connect. {e}. ")
 
 def ssh_and_run(ip,username,password,local_file, target_dest,command):
     try:
@@ -171,9 +156,8 @@ def ssh_and_run(ip,username,password,local_file, target_dest,command):
             print(f"Erreur de {ip}: {error}")
 
         print("Running the script in the virtual environment")
-        stdin, stdout, stderr = client.exec_command("~/venv/bin/python " + command)
-        output = stdout.read().decode(errors='ignore')  
-        error = stderr.read().decode(errors='ignore')
+        stdin, stdout, stderr = client.exec_command("nohup ~/venv/bin/python " + command + " > /dev/null 2>&1 & disown")
+        exit_status = stdout.channel.recv_exit_status()  # Get the exit status of the command
         print(f"Terminal de {ip}: {output}")
         if error:
             print(f"Erreur de {ip}: {error}")
@@ -189,7 +173,5 @@ def ssh_and_run(ip,username,password,local_file, target_dest,command):
         print(f"Echec de l'exécution du script sur {ip}: {e}")
 
 for ip_adresses in ip_addresses.values():
-    check_pass(ip_adresses,username,password)
-
-for ip_adresses in pi_disponibles :
-    ssh_and_run(ip_adresses,username,password,local_file_1,target_dest_1,Command)
+    ip = ip_adresses['RASP_catch']
+    ssh_and_run(ip,username,password,local_file_1,target_dest_1,Command)

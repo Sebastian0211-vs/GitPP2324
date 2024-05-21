@@ -91,10 +91,7 @@ def ssh_and_run(ip,username,password,local_file, target_dest,command):
         print(f"Erreur de {ip}: {e}")
 
         print(f"Script exécuté avec succès sur {ip}")
-        
-
-    except Exception as e:
-        print(f"Erreur de {ip}: {e}")
+    
 
 
 
