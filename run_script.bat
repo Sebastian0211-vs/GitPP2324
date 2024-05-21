@@ -1,5 +1,7 @@
 @echo off
 
+timeout /t 30
+
 python RaspQuickLaunch.py %*
 
 python WatchDogeSupercharged.py %*
