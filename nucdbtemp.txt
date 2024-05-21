@@ -1,0 +1,15 @@
+use nuc_db;
+
+alter table cellules
+drop foreign key fk_ChassisID;
+drop table chassis;
+create table chassis (
+chassisID int,
+RaspCatch varchar(16),
+NbCellules int,
+API varchar(16),
+primary key(chassisID)
+);
+alter table cellules
+add constraint fk_ChassisID foreign key (ChassisID) 
+references chassis(ChassisID)

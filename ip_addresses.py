@@ -18,30 +18,15 @@ def fetch_latest_ip_addresses():
 
     cursor = conn.cursor()  # Create a cursor object to execute SQL queries.
 
-    cursor.execute("SELECT API from chassis")
-    api_results = cursor.fetchall()
-    IP1api = api_results[0][0]
-    IP2api = api_results[1][0]
-    IP3api = api_results[2][0]
+    cursor.execute("SELECT * from chassis")
+    # fetch the db results in a dictionary
+    dico = {}
+    for row in cursor.fetchall():
+        dico[f"Chassis{row[0]}"] = {"API": row[3], "RASP_catch": row[1]}
 
-    cursor.execute("SELECT raspCatch from chassis")
-    raspCatch_results = cursor.fetchall()
-    IP1raspCatch = raspCatch_results[0][0]
-    IP2raspCatch = raspCatch_results[1][0]
-    IP3raspCatch = raspCatch_results[2][0]
-
-    cursor.close()  # Close the cursor after completing all the SQL queries to release database resources.
-
-    # IP addresses' dictionnary
-    ip_addresses = {
-        "Chassis1": {"API":IP1api, "RASP_catch": IP1raspCatch},
-        "Chassis2": {"API":IP2api, "RASP_catch": IP2raspCatch},
-        "Chassis3": {"API":IP3api, "RASP_catch": IP3raspCatch},
-        
-    }
 
     # Close the database connection
     conn.commit()
     conn.close()
 
-    return ip_addresses
+    return dico

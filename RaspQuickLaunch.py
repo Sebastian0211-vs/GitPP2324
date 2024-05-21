@@ -18,6 +18,8 @@ conn = connect(
 
 ip_addresses = fetch_latest_ip_addresses()
 
+print(f"IP addresses: {ip_addresses.values()}")
+
 for ip_adresses in ip_addresses.values():
     try:
         requests.get(f"http://{ip_adresses['RASP_catch']}:8000/kill")
@@ -97,5 +99,6 @@ def ssh_and_run(ip,username,password,local_file, target_dest,command):
 
 
 for ip_adresses in ip_addresses.values():
+    print(f"Trying to connect to {ip_adresses['RASP_catch']}")
     ssh_and_run(ip_adresses['RASP_catch'],username,password,local_file_1,target_dest_1,Command)
     print(f"Script exécuté avec succès sur {ip_adresses}")
