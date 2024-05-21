@@ -148,7 +148,6 @@ def get_info(NombreAPIConnceted,ip_addresses):
             
             # Handle PLC requests that begin with "Mx_API_C". These are alerts.
             if request.startswith("Mx_API_C") and response.status_code == 200:
-                print("j'ai reçu une alerte True")
                 # Check for various suffixes in the request to determine the type of alert
                 if request.endswith("normal"):
                     print("Tout va bien")
@@ -157,8 +156,10 @@ def get_info(NombreAPIConnceted,ip_addresses):
                     SOS_Warning(1, f"http://{ip_address['RASP_catch']}:8000", "yellow", f"Position{request[8]}")
                     logging.info(response.json())
                 elif request.endswith("alerte"):
-                    print("J'ai reçu une alerte critique !!")
+                    print("Alerte Critique :")
+                    print(ip_address['API'], ": Request: ", request, "Response: ", response.json())
                     SOS_Warning(1, f"http://{ip_address['RASP_catch']}:8000", "red", f"Position{request[8]}")
+
                     print(response.json())
                     logging.info(response.json())
 
