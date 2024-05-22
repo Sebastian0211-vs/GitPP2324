@@ -290,6 +290,7 @@ def modes():
     infiniP = 5
     changedP = 6
     chassisP = 7
+
     conn = connect(
       user=config['Login_Turtle']['user'],
       password=config['Login_Turtle']['password'],
@@ -300,32 +301,37 @@ def modes():
     cursor.execute("SELECT * from options")
     options = cursor.fetchall()
     cursor.close()
+
+    multihandled = 0
+
     for option in options:
         ipchassis = ip.ip_addresses[f"Chassis{option[chassisP]}"]["RASP_catch"]
         if option[changedP]:
-            if option[multi]:
-                first = 0
-                for option in options:
-                    ipchassis = ip.ip_addresses[f"Chassis{option[chassisP]}"]["RASP_catch"]
-                    if option[multi]and first == 0:
-                        requests.get(f"http://{ipchassis}:8000/modes/infini/True")
-                        requests.get(f"http://{ipchassis}:8000/modes/infini/False")
-                        requests.get(f"http://{ipchassis}:8000/modes/multi/True")
-                        requests.get(f"http://{ipchassis}:8000/modes/multi/False")
-                        first = 1
-                    elif  option[multi]and first != 0:
-                        requests.get(f"http://{ipchassis}:8000/modes/validationmulti/True") 
-                    else:
-                        requests.get(f"http://{ipchassis}:8000/modes/bloquedemandemulti/True")
+            if option[multiP]:
+                if multihandled == 0:
+                    first = 0
+                    for option in options:
+                        ipchassis = ip.ip_addresses[f"Chassis{option[chassisP]}"]["RASP_catch"]
+                        if option[multiP]and first == 0:
+                            requests.get(f"http://{ipchassis}:8000/modes/infini/True")
+                            requests.get(f"http://{ipchassis}:8000/modes/infini/False")
+                            requests.get(f"http://{ipchassis}:8000/modes/multi/True")
+                            requests.get(f"http://{ipchassis}:8000/modes/multi/False")
+                            first = 1
+                        elif  option[multiP]and first != 0:
+                            requests.get(f"http://{ipchassis}:8000/modes/validationmulti/True") 
+                        else:
+                            requests.get(f"http://{ipchassis}:8000/modes/bloquedemandemulti/True")
+                    multihandled = 1
                 ipchassis = ip.ip_addresses[f"Chassis{option[chassisP]}"]["RASP_catch"]
             elif option[infiniP]:
                 requests.get(f"http://{ipchassis}:8000/modes/infini/True")
                 requests.get(f"http://{ipchassis}:8000/modes/infini/False")
-            elif option[billes]:
+            elif option[billesP]:
                 requests.get(f"http://{ipchassis}:8000/modes/billes/True")
                 requests.get(f"http://{ipchassis}:8000/modes/billes/False")
                 requests.get(f"http://{ipchassis}:8000/modes/nbrebilles/{option[billesP]}")
-            elif option[temps]:
+            elif option[tempsP]:
                 if option[uniteP] == "h":
                     tempsD = option[3] *60*60*1000
                 elif option[uniteP] == "m":
@@ -346,7 +352,6 @@ def modes():
             billes = modes_api[1]
             temps = modes_api[2]
             infini = modes_api[3]
-
 
             if temps > 60*60*1000:
                 temps = temps // (60*60*1000)

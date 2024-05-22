@@ -221,9 +221,10 @@ def lecturemodes():
         global CONNECTED_PLC
         try:
             modes = []
-            for mode in possibles_modes:
-                modes.append(commS7.readMemory(CONNECTED_PLC, mode))
-            
+            modes.append(commS7.readMemory(CONNECTED_PLC, "Mx_HMI_mode_multi"))
+            modes.append(commS7.readMemory(CONNECTED_PLC, "Mw_HMI_selec_billes"))
+            modes.append(commS7.readMemory(CONNECTED_PLC, "Md_HMI_selec_temps"))
+            modes.append(commS7.readMemory(CONNECTED_PLC, "Mx_HMI_mode_infinity"))
             return modes
         except Exception as e:
             logging.error(f"Error in /modes: {str(e)}")
