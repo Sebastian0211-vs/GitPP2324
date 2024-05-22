@@ -81,7 +81,8 @@ def job():
 
     logging.info('Job finished')
     print(f"Execution time: {time.time() - start_time}")
-    print(f"Temps depuis le lancement : {time.time() - grosse_horloge}")
+    temps_depuis_le_lancement = time.time() - grosse_horloge
+    print(f"Temps depuis le lancement : {temps_depuis_le_lancement//3600} heures {temps_depuis_le_lancement%3600//60} minutes {temps_depuis_le_lancement%60} secondes")
     if time.time() - running_time > config['logging']['time_before_flush']:
         # if the program has been running for more than an hour, delete the logs
         open(config['logging']['filename'], 'w').close()

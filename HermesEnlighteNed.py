@@ -20,6 +20,12 @@ with open('/home/pi/Desktop/configHermes.json', 'r') as config_file:
 # Configuration des GPIO pour le Raspberry Pi
 GPIO.setmode(GPIO.BCM)
 
+gpio_pins_to_free = [2, 3, 14, 15,18,8,7,1,12,20,21,13,19,10,9,11]  # Example pins for I2C and UART
+
+# Free specific GPIO pins
+for pin in gpio_pins_to_free:
+    os.system(f"sudo raspi-gpio set {pin} ip")
+
 # Configuration du système de journalisation
 logging.basicConfig(filename=config['logging']['file_path'], level=logging.getLevelName(config['logging']['log_level']))
 
