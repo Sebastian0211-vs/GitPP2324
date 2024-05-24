@@ -285,6 +285,34 @@ def reset_pin(position):
     except Exception as e:
         return jsonify(error=str(e)), 500
     
+# ROute pour activer l'animation "rainbow" sur toutes les positions 
+@app.route('/rainbow', methods=['GET'])
+def rainbow_all():
+    try:
+        for color in color_list:
+            for position in valid_positions:
+                pin_LOW(position, color)
+
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+    try:
+        for position in valid_positions:
+            for couleur in color_list:
+                if couleur in color_combinations:
+                    for color in color_combinations[couleur]:
+                        setup_and_activate(position, color, GPIO.HIGH)
+                    time.sleep(0.1)
+                    for color in color_combinations[couleur]:
+                        setup_and_activate(position, color, GPIO.LOW)
+                else:
+                    setup_and_activate(position, couleur, GPIO.HIGH)
+                    time.sleep(0.1)
+                    setup_and_activate(position, couleur, GPIO.LOW)
+        return jsonify(message="Effet arc-en-ciel appliqué à toutes les positions"), 200
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+    
 # Route pour activer l'animation "rainbow" sur les LEDs d'une position donnée
 @app.route('/rainbow/<string:position>', methods=['GET'])
 def rainbow(position):
