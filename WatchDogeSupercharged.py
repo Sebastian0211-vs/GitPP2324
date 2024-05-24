@@ -72,7 +72,7 @@ def job():
     NombreAPIConnceted = 0
 
     NombreAPIConnceted = multi_possible(NombreAPIConnceted,fetch_latest_ip_addresses())
-    nombremultisql = 2
+    nombremultisql = NombreAPIConnceted
 
     checkplusde3(nombremultisql,fetch_latest_ip_addresses())
     get_info(NombreAPIConnceted,fetch_latest_ip_addresses())
