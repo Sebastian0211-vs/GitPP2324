@@ -51,4 +51,20 @@ Louis Schanen - louis.schanen@edu.vs.ch
 
 Quelqu'un de très peu important (Nieh)
 
+## Responsable backoffice
+
+Keenan Prusse - keenan.prusse@edu.vs.ch
+
+## Architecte de l'interface web
+
+Gaëtan Veuillet - gaetan.veuillet@edu.vs.ch
+
+## Stagiaire de la base de donnée
+
+Benno Weber - benno.weber@edu.vs.ch
+
+## Responsable qualité
+
+Julien Roduit - julien.roduit@edu.vs.ch
+
 Lien du projet : [https://github.com/Sebastian0211-vs/GitPP2324](https://github.com/Sebastian0211-vs/GitPP2324)
